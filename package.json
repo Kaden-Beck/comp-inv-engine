@@ -2,15 +2,14 @@
   "name": "comp-inv-engine",
   "version": "1.0.0",
   "description": "TS engine to manage inventory for Computer Hardware Inventory Manager. Built in TypeScript with Zod and vitest.",
-  "keywords": [
-    "typescript"
-  ],
   "license": "ISC",
   "author": "Kaden Beck (@Kaden-Beck)",
   "type": "module",
   "main": "main.js",
   "scripts": {
-    "dev": "",
+    "build": "npx tsc",
+    "start": "node build/main.js",
+    "dev": "npx tsc && node build/main.js",
     "test": "vitest"
   },
   "devDependencies": {
