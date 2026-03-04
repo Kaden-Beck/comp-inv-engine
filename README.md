@@ -2,7 +2,7 @@
 
 This TypeScript project serves as the first step in my Computer Hardware Store Inventory Management project.
 
-I am using this project to explore the functionality of TypeScript and practice writing full stack applications with React outside of the next.js ecosystem. 
+I am using this project to explore the functionality of TypeScript and practice writing full stack applications with React outside of the next.js ecosystem.
 
 ## Development Environment
 
@@ -45,4 +45,4 @@ Developed on Nobara Linux in Visual Studio Code
 - Add user authentication
 - Add noSQL database
 - Convert CRUD operations to tanstack query
-- Add React Router 
+- Add React Router

@@ -10,14 +10,21 @@
     "build": "npx tsc",
     "start": "node build/main.js",
     "dev": "npx tsc && node build/main.js",
-    "test": "vitest"
+    "test": "vitest",
+    "lint": "eslint ."
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.3",
     "@types/node": "^25.3.3",
-    "@typescript-eslint/eslint-plugin": "^8.56.1",
-    "@typescript-eslint/parser": "^8.56.1",
-    "eslint": "^10.0.2",
+    "eslint": "^9.39.3",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.5.0",
+    "jiti": "^2.6.1",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1",
     "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
   }
 }

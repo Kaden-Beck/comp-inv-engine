@@ -1,0 +1,43 @@
+import { createInterface, type Interface } from 'readline';
+import { commandExit, commandHelp } from './basicCommands.js';
+
+export type CLICommand = {
+  name: string;
+  description: string;
+  callback: (state: State, ...args: string[]) => Promise<void>;
+};
+
+export type State = {
+  readline: Interface;
+  commands: Record<string, CLICommand>;
+};
+
+export function getCommands(): Record<string, CLICommand> {
+  return {
+    exit: {
+      name: 'exit',
+      description: 'Exits the pokedex',
+      callback: commandExit,
+    },
+    help: {
+      name: 'help',
+      description: 'Gets help for the pokedex CLI',
+      callback: commandHelp,
+    },
+  };
+}
+
+export function initState(): State {
+  const readLineInterface = createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    prompt: 'InvManager > ',
+  });
+
+  const commandRecords: Record<string, CLICommand> = getCommands();
+
+  return {
+    readline: readLineInterface,
+    commands: commandRecords,
+  };
+}
