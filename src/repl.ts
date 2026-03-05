@@ -14,7 +14,7 @@ export async function startREPL(): Promise<void> {
   const replState = initState();
   const { readline, commands } = replState;
 
-  readline.setPrompt('Pokedex > ');
+  readline.setPrompt('InvManager > ');
   readline.prompt();
 
   for await (const line of readline) {

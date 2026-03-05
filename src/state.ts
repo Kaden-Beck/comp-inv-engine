@@ -16,12 +16,12 @@ export function getCommands(): Record<string, CLICommand> {
   return {
     exit: {
       name: 'exit',
-      description: 'Exits the pokedex',
+      description: 'Exits the manager',
       callback: commandExit,
     },
     help: {
       name: 'help',
-      description: 'Gets help for the pokedex CLI',
+      description: 'Return a list of available commands',
       callback: commandHelp,
     },
   };
