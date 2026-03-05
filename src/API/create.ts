@@ -1,11 +1,6 @@
 import { ParentCategory, SubCategory } from '../schema/Category.js';
-import { InventoryItem, ItemConstructor } from '../schema/inventoryItem.js';
+import { Product, ProductConstructor } from '../schema/Product.js';
 import { Manufacturer } from '../schema/Manufacturer.js';
-
-export function addInventory(data: ItemConstructor) {
-  const newItem = new InventoryItem(data);
-  return newItem;
-}
 
 export function addManufacturer(data: Manufacturer) {
   return {
@@ -15,7 +10,8 @@ export function addManufacturer(data: Manufacturer) {
   };
 }
 
-export function addCategory(data: ParentCategory | SubCategory) {
+// API function to create a new category
+export async function addCategory(data: ParentCategory | SubCategory) {
   if ('parentCategory' in data) {
     return {
       categoryName: data.categoryName,
@@ -29,4 +25,10 @@ export function addCategory(data: ParentCategory | SubCategory) {
       childCategories: data.childCategories,
     };
   }
+}
+
+// API Function to create a new item and add it to the inventory
+export async function addProduct(data: ProductConstructor): Promise<Product> {
+  const newItem = new Product(data);
+  return newItem;
 }

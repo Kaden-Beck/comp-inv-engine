@@ -21,4 +21,6 @@ export function initializeInventoryManager(
     categoryNames,
     manufacturerNames,
   };
+
+  
 }
