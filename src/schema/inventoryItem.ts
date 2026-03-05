@@ -1,29 +1,14 @@
-export interface Manufacturer {
-  name: string;
-  categoriesManufactured: Category[];
-  logoURL: string;
-}
+import { Category } from './Category.js';
+import { Manufacturer } from './Manufacturer.js';
 
-export enum Category {
-  Display,
-  Peripheral,
-  Motherboard,
-  CPU,
-  GPU,
-  Memory,
-  Storage,
-  Cooling,
-  PowerSupply,
-}
-
-export type InventoryConstructor = {
+export interface ItemConstructor {
   lastID: number;
   productName: string;
   category: Category;
   MSRP: number;
   price?: number;
   manufacturer: Manufacturer;
-};
+}
 
 export class InventoryItem {
   invID: number;
@@ -33,7 +18,7 @@ export class InventoryItem {
   price: number;
   manufacturer: Manufacturer;
 
-  constructor(data: InventoryConstructor) {
+  constructor(data: ItemConstructor) {
     this.invID = data.lastID + 1;
     this.productName = data.productName;
     this.category = data.category;
@@ -44,5 +29,13 @@ export class InventoryItem {
 
   public get MSRP(): number {
     return this.#MSRP;
+  }
+
+  getMarkup(): number {
+    return this.price ? this.price - this.#MSRP : this.#MSRP;
+  }
+
+  printProductDetails(): void {
+    console.log(this.productName);
   }
 }

@@ -1,0 +1,77 @@
+[
+  {
+    "name": "ASUS",
+    "categoriesManufactured": ["Motherboard", "GPU", "Display", "Peripheral"],
+    "logoURL": "https://logo.clearbit.com/asus.com"
+  },
+  {
+    "name": "MSI",
+    "categoriesManufactured": ["Motherboard", "GPU", "Display", "PowerSupply"],
+    "logoURL": "https://logo.clearbit.com/msi.com"
+  },
+  {
+    "name": "Gigabyte",
+    "categoriesManufactured": ["Motherboard", "GPU", "PowerSupply", "Display"],
+    "logoURL": "https://logo.clearbit.com/gigabyte.com"
+  },
+  {
+    "name": "ASRock",
+    "categoriesManufactured": ["Motherboard", "GPU"],
+    "logoURL": "https://logo.clearbit.com/asrock.com"
+  },
+  {
+    "name": "Intel",
+    "categoriesManufactured": ["CPU", "Integrated GPU", "SSD"],
+    "logoURL": "https://logo.clearbit.com/intel.com"
+  },
+  {
+    "name": "AMD",
+    "categoriesManufactured": ["CPU", "GPU", "Integrated GPU"],
+    "logoURL": "https://logo.clearbit.com/amd.com"
+  },
+  {
+    "name": "NVIDIA",
+    "categoriesManufactured": ["GPU"],
+    "logoURL": "https://logo.clearbit.com/nvidia.com"
+  },
+  {
+    "name": "Corsair",
+    "categoriesManufactured": [
+      "Memory",
+      "Storage",
+      "Cooling",
+      "PowerSupply",
+      "Peripheral"
+    ],
+    "logoURL": "https://logo.clearbit.com/corsair.com"
+  },
+  {
+    "name": "Samsung",
+    "categoriesManufactured": ["Display", "Storage", "Memory"],
+    "logoURL": "https://logo.clearbit.com/samsung.com"
+  },
+  {
+    "name": "Western Digital",
+    "categoriesManufactured": ["Storage", "HDD", "NVMe SSD"],
+    "logoURL": "https://logo.clearbit.com/westerndigital.com"
+  },
+  {
+    "name": "Seagate",
+    "categoriesManufactured": ["Storage", "HDD", "SSD"],
+    "logoURL": "https://logo.clearbit.com/seagate.com"
+  },
+  {
+    "name": "Noctua",
+    "categoriesManufactured": ["Cooling", "Air Cooler", "Case Fan"],
+    "logoURL": "https://logo.clearbit.com/noctua.at"
+  },
+  {
+    "name": "Logitech",
+    "categoriesManufactured": [
+      "Peripheral",
+      "Gaming Mouse",
+      "Mechanical Keyboard"
+    ],
+    "logoURL": "https://logo.clearbit.com/logitech.com"
+  }
+]

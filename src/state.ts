@@ -1,5 +1,9 @@
 import { createInterface, type Interface } from 'readline';
 import { commandExit, commandHelp } from './basicCommands.js';
+import {
+  initializeInventoryManager,
+  type InventoryManager,
+} from './inventoryManager.js';
 
 export type CLICommand = {
   name: string;
@@ -10,6 +14,7 @@ export type CLICommand = {
 export type State = {
   readline: Interface;
   commands: Record<string, CLICommand>;
+  inventoryManager: InventoryManager;
 };
 
 export function getCommands(): Record<string, CLICommand> {
@@ -34,10 +39,43 @@ export function initState(): State {
     prompt: 'InvManager > ',
   });
 
+  const categories = [
+    {
+      categoryName: 'Display',
+      categoryDescription:
+        'Computer peripherals that display visual output from a computer.',
+      isParentCategory: true,
+    },
+    {
+      categoryName: 'Peripheral',
+      categoryDescription:
+        'External input/output accessories that connect to a computer.',
+      isParentCategory: true,
+    },
+  ];
+  const manufacturers = [
+    {
+      name: 'ASUS',
+      categoriesManufactured: ['Motherboard', 'GPU', 'Display', 'Peripheral'],
+      logoURL: 'https://logo.clearbit.com/asus.com',
+    },
+    {
+      name: 'MSI',
+      categoriesManufactured: ['Motherboard', 'GPU', 'Display', 'PowerSupply'],
+      logoURL: 'https://logo.clearbit.com/msi.com',
+    },
+  ];
+
+  const inventoryManager: InventoryManager = initializeInventoryManager(
+    categories,
+    manufacturers,
+  );
+
   const commandRecords: Record<string, CLICommand> = getCommands();
 
   return {
     readline: readLineInterface,
     commands: commandRecords,
+    inventoryManager,
   };
 }

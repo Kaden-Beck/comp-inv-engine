@@ -1,0 +1,288 @@
+[
+  {
+    "categoryName": "Display",
+    "categoryDescription": "Computer peripherals that display visual output from a computer.",
+    "isParentCategory": true
+  },
+  {
+    "categoryName": "Peripheral",
+    "categoryDescription": "External input/output accessories that connect to a computer.",
+    "isParentCategory": true
+  },
+  {
+    "categoryName": "Motherboard",
+    "categoryDescription": "Core system boards that connect and coordinate all major components.",
+    "isParentCategory": true
+  },
+  {
+    "categoryName": "CPU",
+    "categoryDescription": "Central processing units responsible for executing instructions.",
+    "isParentCategory": true
+  },
+  {
+    "categoryName": "GPU",
+    "categoryDescription": "Graphics processing units used for rendering and parallel compute tasks.",
+    "isParentCategory": true
+  },
+  {
+    "categoryName": "Memory",
+    "categoryDescription": "Volatile memory modules used for active system workloads.",
+    "isParentCategory": true
+  },
+  {
+    "categoryName": "Storage",
+    "categoryDescription": "Persistent storage devices used to retain data long term.",
+    "isParentCategory": true
+  },
+  {
+    "categoryName": "Cooling",
+    "categoryDescription": "Components that manage and dissipate heat in computer systems.",
+    "isParentCategory": true
+  },
+  {
+    "categoryName": "PowerSupply",
+    "categoryDescription": "Power delivery units that convert and provide stable system power.",
+    "isParentCategory": true
+  },
+
+  {
+    "categoryName": "OLED Monitor",
+    "categoryDescription": "High-contrast self-emissive display panels.",
+    "parentCategory": {
+      "categoryName": "Display",
+      "categoryDescription": "Computer peripherals that display visual output from a computer.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "Mechanical Keyboard",
+    "categoryDescription": "Keyboard peripherals using mechanical key switches.",
+    "parentCategory": {
+      "categoryName": "Peripheral",
+      "categoryDescription": "External input/output accessories that connect to a computer.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "ATX",
+    "categoryDescription": "Standard full-size motherboard form factor.",
+    "parentCategory": {
+      "categoryName": "Motherboard",
+      "categoryDescription": "Core system boards that connect and coordinate all major components.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "Desktop CPU",
+    "categoryDescription": "General-purpose processors for desktop platforms.",
+    "parentCategory": {
+      "categoryName": "CPU",
+      "categoryDescription": "Central processing units responsible for executing instructions.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "Discrete GPU",
+    "categoryDescription": "Dedicated graphics cards installed in expansion slots.",
+    "parentCategory": {
+      "categoryName": "GPU",
+      "categoryDescription": "Graphics processing units used for rendering and parallel compute tasks.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "DDR5",
+    "categoryDescription": "Current-generation desktop memory modules.",
+    "parentCategory": {
+      "categoryName": "Memory",
+      "categoryDescription": "Volatile memory modules used for active system workloads.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "SSD",
+    "categoryDescription": "Solid-state drives for high-speed persistent storage.",
+    "parentCategory": {
+      "categoryName": "Storage",
+      "categoryDescription": "Persistent storage devices used to retain data long term.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "HDD",
+    "categoryDescription": "Magnetic disk drives for high-capacity archival storage.",
+    "parentCategory": {
+      "categoryName": "Storage",
+      "categoryDescription": "Persistent storage devices used to retain data long term.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "AIO Liquid Cooler",
+    "categoryDescription": "Closed-loop liquid cooling solutions for CPUs.",
+    "parentCategory": {
+      "categoryName": "Cooling",
+      "categoryDescription": "Components that manage and dissipate heat in computer systems.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "Modular PSU",
+    "categoryDescription": "Power supplies with detachable cables for easier cable management.",
+    "parentCategory": {
+      "categoryName": "PowerSupply",
+      "categoryDescription": "Power delivery units that convert and provide stable system power.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "IPS Monitor",
+    "categoryDescription": "Display panels known for strong color accuracy and viewing angles.",
+    "parentCategory": {
+      "categoryName": "Display",
+      "categoryDescription": "Computer peripherals that display visual output from a computer.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "Gaming Mouse",
+    "categoryDescription": "Precision mice with adjustable DPI and programmable buttons.",
+    "parentCategory": {
+      "categoryName": "Peripheral",
+      "categoryDescription": "External input/output accessories that connect to a computer.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "Micro-ATX",
+    "categoryDescription": "Compact motherboard form factor balancing size and expandability.",
+    "parentCategory": {
+      "categoryName": "Motherboard",
+      "categoryDescription": "Core system boards that connect and coordinate all major components.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "Mini-ITX",
+    "categoryDescription": "Small-form-factor motherboards for compact system builds.",
+    "parentCategory": {
+      "categoryName": "Motherboard",
+      "categoryDescription": "Core system boards that connect and coordinate all major components.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "Server CPU",
+    "categoryDescription": "Processors optimized for multi-core throughput and uptime workloads.",
+    "parentCategory": {
+      "categoryName": "CPU",
+      "categoryDescription": "Central processing units responsible for executing instructions.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "Integrated GPU",
+    "categoryDescription": "Graphics processing built into a CPU package.",
+    "parentCategory": {
+      "categoryName": "GPU",
+      "categoryDescription": "Graphics processing units used for rendering and parallel compute tasks.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "GDDR6",
+    "categoryDescription": "High-bandwidth memory used on modern graphics cards.",
+    "parentCategory": {
+      "categoryName": "Memory",
+      "categoryDescription": "Volatile memory modules used for active system workloads.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "DDR4",
+    "categoryDescription": "Previous-generation desktop memory modules still common in many systems.",
+    "parentCategory": {
+      "categoryName": "Memory",
+      "categoryDescription": "Volatile memory modules used for active system workloads.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "NVMe SSD",
+    "categoryDescription": "PCIe-based solid-state drives with very high throughput and low latency.",
+    "parentCategory": {
+      "categoryName": "Storage",
+      "categoryDescription": "Persistent storage devices used to retain data long term.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "SATA SSD",
+    "categoryDescription": "Solid-state drives that use the SATA interface for broad compatibility.",
+    "parentCategory": {
+      "categoryName": "Storage",
+      "categoryDescription": "Persistent storage devices used to retain data long term.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "Air Cooler",
+    "categoryDescription": "Heatsink and fan cooling solutions for processors.",
+    "parentCategory": {
+      "categoryName": "Cooling",
+      "categoryDescription": "Components that manage and dissipate heat in computer systems.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "Case Fan",
+    "categoryDescription": "Chassis fans that improve overall airflow through the system.",
+    "parentCategory": {
+      "categoryName": "Cooling",
+      "categoryDescription": "Components that manage and dissipate heat in computer systems.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "SFX PSU",
+    "categoryDescription": "Compact power supplies designed for small-form-factor cases.",
+    "parentCategory": {
+      "categoryName": "PowerSupply",
+      "categoryDescription": "Power delivery units that convert and provide stable system power.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  },
+  {
+    "categoryName": "ATX PSU",
+    "categoryDescription": "Standard-size desktop power supply units.",
+    "parentCategory": {
+      "categoryName": "PowerSupply",
+      "categoryDescription": "Power delivery units that convert and provide stable system power.",
+      "isParentCategory": true
+    },
+    "isParentCategory": false
+  }
+]
