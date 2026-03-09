@@ -1,0 +1,7 @@
+connectorId: 'inventory-connector'
+generate:
+  javascriptSdk:
+    outputDir: '../../src/dataconnect'
+    package: '@dataconnect/generated'
+    packageJsonDir: '../..'
+    react: true

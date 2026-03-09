@@ -1,0 +1,171 @@
+# dataconnect/schema/schema.gql
+
+# ##################
+# CORE CATEGORIZATION
+# ##################
+
+type Category @table(name: "categories") {
+  id: UUID! @default(expr: "uuidV4()")
+  name: String!
+  description: String!
+  isParent: Boolean!
+
+  # Self-referencing relationship for hierarchy
+  parentId: UUID
+  parent: Category @ref(fields: ["parentId"])
+}
+
+type Manufacturer @table(name: "manufacturers") {
+  id: UUID! @default(expr: "uuidV4()")
+  name: String!
+  description: String!
+}
+
+# ##################
+# PRODUCT BASE
+# ##################
+
+type Product @table(name: "products") {
+  id: UUID! @default(expr: "uuidV4()")
+  name: String!
+  sku: String! @unique
+  description: String!
+  color: String
+  msrp: Float!
+  price: Float
+  quantity: Int!
+
+  # Relationships
+  manufacturerId: UUID!
+  manufacturer: Manufacturer! @ref(fields: ["manufacturerId"])
+
+  categoryId: UUID!
+  category: Category! @ref(fields: ["categoryId"])
+}
+
+type ProductImage @table(name: "images") {
+  id: UUID! @default(expr: "uuidV4()")
+  url: String!
+  altText: String
+
+  productId: UUID!
+  product: Product! @ref(fields: ["productId"])
+}
+
+# ##################
+# SPECIALIZED PRODUCT TYPES
+# ##################
+
+type Cpu @table(name: "cpus") {
+  # We use the Product ID as the Primary Key to ensure 1:1 relationship
+  id: UUID! @default(expr: "uuidV4()")
+  productId: UUID! @unique
+  product: Product! @ref(fields: ["productId"])
+
+  cores: Int!
+  threads: Int!
+  baseClockGHz: Float!
+  boostClockGHz: Float
+  tdp: Int!
+  socketType: String!
+  integratedGraphics: Boolean!
+  cacheMB: Int
+}
+
+type Gpu @table(name: "gpus") {
+  id: UUID! @default(expr: "uuidV4()")
+  productId: UUID! @unique
+  product: Product! @ref(fields: ["productId"])
+
+  chipset: String!
+  vramGB: Int!
+  vramType: String!
+  coreCount: Int
+  baseClockMHz: Int
+  boostClockMHz: Int
+  tdp: Int!
+  lengthMM: Int
+  powerConnectors: String
+}
+
+type Storage @table(name: "storage") {
+  id: UUID! @default(expr: "uuidV4()")
+  productId: UUID! @unique
+  product: Product! @ref(fields: ["productId"])
+
+  storageType: String! # "SSD", "HDD", "NVMe"
+  capacityGB: Int!
+  interface: String!
+  formFactor: String!
+  readSpeedMBps: Int
+  writeSpeedMBps: Int
+}
+
+type Psu @table(name: "psus") {
+  id: UUID! @default(expr: "uuidV4()")
+  productId: UUID! @unique
+  product: Product! @ref(fields: ["productId"])
+
+  wattage: Int!
+  efficiencyRating: String!
+  modular: String!
+  formFactor: String!
+}
+
+type CpuCooler @table(name: "cpu_coolers") {
+  id: UUID! @default(expr: "uuidV4()")
+  productId: UUID! @unique
+  product: Product! @ref(fields: ["productId"])
+
+  coolerType: String!
+  radiatorSizeMM: Int
+  fanSizeMM: Int
+  maxTDP: Int!
+  socketCompatibility: String!
+  heightMM: Int!
+}
+
+type Case @table(name: "cases") {
+  id: UUID! @default(expr: "uuidV4()")
+  productId: UUID! @unique
+  product: Product! @ref(fields: ["productId"])
+
+  formFactor: String!
+  moboSupport: String!
+  maxGPULengthMM: Int
+  maxCPUCoolerHeightMM: Int
+  maxPSULengthMM: Int
+  driveSlotsTwoHalf: Int
+  driveSlotsThreeHalf: Int
+  fanSlots: Int
+  radiatorSupport: String
+}
+
+type Ram @table(name: "ram") {
+  id: UUID! @default(expr: "uuidV4()")
+  productId: UUID! @unique
+  product: Product! @ref(fields: ["productId"])
+
+  memoryType: String!
+  speedMHz: Int!
+  capacityGB: Int!
+  modules: Int!
+  casLatency: Int
+  voltage: Float
+}
+
+type Motherboard @table(name: "motherboards") {
+  id: UUID! @default(expr: "uuidV4()")
+  productId: UUID! @unique
+  product: Product! @ref(fields: ["productId"])
+
+  socketType: String!
+  chipset: String!
+  formFactor: String!
+  memoryType: String!
+  memorySlots: Int!
+  maxMemoryGB: Int!
+  m2Slots: Int
+  sataSlots: Int
+  pciSlots: Int
+}
