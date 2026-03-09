@@ -28,11 +28,15 @@ Developed on Nobara Linux in Visual Studio Code
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [Zod Documentation](http://url.link.goes.here)
 - [Vitest Documentation](https://vitest.dev/)
+- [Firebase Data Connect](https://firebase.google.com/docs/data-connect)
 
 ## In Progress
 
 - [x] Hello World and first init
-- [ ] Built out classes and types for inventory
+- [X] Set up Firebase Project (BASS)
+- [X] Set up Firebase Schema
+- [X] Connect Firebase Data Connect project to local project
+- [ ] Use types created by Data Connect to create Zod Definitions
 - [ ] Add Zod for runtime validation
 - [ ] Build out CRUD functions
 - [ ] Build testing suite with vitest for CI/CD
