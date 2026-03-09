@@ -25,6 +25,7 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
+    "@dataconnect/generated": "file:src/dataconnect",
     "zod": "^4.3.6"
   }
 }

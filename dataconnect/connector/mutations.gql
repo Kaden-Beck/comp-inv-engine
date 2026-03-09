@@ -2,7 +2,6 @@
 # PRODUCT MUTATIONS
 # ##################
 
-# Create a new product
 mutation CreateProduct(
   $name: String!
   $sku: String!
@@ -14,33 +13,21 @@ mutation CreateProduct(
   $manufacturerId: UUID!
   $categoryId: UUID!
 ) @auth(level: PUBLIC) {
-  product_insert(data: {
-    name: $name
-    sku: $sku
-    description: $description
-    color: $color
-    msrp: $msrp
-    price: $price
-    quantity: $quantity
-    manufacturerId: $manufacturerId
-    categoryId: $categoryId
-  }) {
-    id
-    name
-    sku
-    quantity
-    manufacturer {
-      id
-      name
+  product_insert(
+    data: {
+      name: $name
+      sku: $sku
+      description: $description
+      color: $color
+      msrp: $msrp
+      price: $price
+      quantity: $quantity
+      manufacturerId: $manufacturerId
+      categoryId: $categoryId
     }
-    category {
-      id
-      name
-    }
-  }
+  )
 }
 
-# Update product
 mutation UpdateProduct(
   $id: UUID!
   $name: String
@@ -60,189 +47,17 @@ mutation UpdateProduct(
       quantity: $quantity
       categoryId: $categoryId
     }
-  ) {
-    id
-    name
-    sku
-    price
-    quantity
-    manufacturer {
-      id
-      name
-    }
-    category {
-      id
-      name
-    }
-  }
+  )
 }
 
-# Delete product
 mutation DeleteProduct($id: UUID!) @auth(level: PUBLIC) {
-  product_delete(id: $id) {
-    id
-  }
-}
-
-# Update product quantity (for inventory operations)
-mutation UpdateProductQuantity(
-  $id: UUID!
-  $quantity: Int!
-) @auth(level: PUBLIC) {
-  product_update(
-    id: $id
-    data: { quantity: $quantity }
-  ) {
-    id
-    name
-    sku
-    quantity
-  }
-}
-
-# ##################
-# PRODUCT IMAGE MUTATIONS
-# ##################
-
-# Create product image
-mutation CreateProductImage(
-  $url: String!
-  $altText: String
-  $productId: UUID!
-) @auth(level: PUBLIC) {
-  productImage_insert(data: {
-    url: $url
-    altText: $altText
-    productId: $productId
-  }) {
-    id
-    url
-    altText
-  }
-}
-
-# Delete product image
-mutation DeleteProductImage($id: UUID!) @auth(level: PUBLIC) {
-  productImage_delete(id: $id) {
-    id
-  }
-}
-
-# ##################
-# MANUFACTURER MUTATIONS
-# ##################
-
-# Create manufacturer
-mutation CreateManufacturer(
-  $name: String!
-  $description: String!
-) @auth(level: PUBLIC) {
-  manufacturer_insert(data: {
-    name: $name
-    description: $description
-  }) {
-    id
-    name
-    description
-  }
-}
-
-# Update manufacturer
-mutation UpdateManufacturer(
-  $id: UUID!
-  $name: String
-  $description: String
-) @auth(level: PUBLIC) {
-  manufacturer_update(
-    id: $id
-    data: {
-      name: $name
-      description: $description
-    }
-  ) {
-    id
-    name
-    description
-  }
-}
-
-# Delete manufacturer
-mutation DeleteManufacturer($id: UUID!) @auth(level: PUBLIC) {
-  manufacturer_delete(id: $id) {
-    id
-  }
-}
-
-# ##################
-# CATEGORY MUTATIONS
-# ##################
-
-# Create category
-mutation CreateCategory(
-  $name: String!
-  $description: String!
-  $isParent: Boolean!
-  $parentId: UUID
-) @auth(level: PUBLIC) {
-  category_insert(data: {
-    name: $name
-    description: $description
-    isParent: $isParent
-    parentId: $parentId
-  }) {
-    id
-    name
-    description
-    isParent
-    parent {
-      id
-      name
-    }
-  }
-}
-
-# Update category
-mutation UpdateCategory(
-  $id: UUID!
-  $name: String
-  $description: String
-  $isParent: Boolean
-  $parentId: UUID
-) @auth(level: PUBLIC) {
-  category_update(
-    id: $id
-    data: {
-      name: $name
-      description: $description
-      isParent: $isParent
-      parentId: $parentId
-    }
-  ) {
-    id
-    name
-    description
-    isParent
-    parent {
-      id
-      name
-    }
-  }
-}
-
-# Delete category
-mutation DeleteCategory($id: UUID!) @auth(level: PUBLIC) {
-  category_delete(id: $id) {
-    id
-  }
+  product_delete(id: $id)
 }
 
 # ##################
 # SPECIALIZED PRODUCT MUTATIONS
 # ##################
 
-# Note: Create product first, then create specialized specs with the productId
-
-# Create CPU specs (after creating base Product)
 mutation CreateCPUSpecs(
   $productId: UUID!
   $cores: Int!
@@ -254,30 +69,21 @@ mutation CreateCPUSpecs(
   $integratedGraphics: Boolean!
   $cacheMB: Int
 ) @auth(level: PUBLIC) {
-  cpu_insert(data: {
-    productId: $productId
-    cores: $cores
-    threads: $threads
-    baseClockGHz: $baseClockGHz
-    boostClockGHz: $boostClockGHz
-    tdp: $tdp
-    socketType: $socketType
-    integratedGraphics: $integratedGraphics
-    cacheMB: $cacheMB
-  }) {
-    id
-    cores
-    threads
-    socketType
-    product {
-      id
-      name
-      sku
+  cpu_insert(
+    data: {
+      productId: $productId
+      cores: $cores
+      threads: $threads
+      baseClockGHz: $baseClockGHz
+      boostClockGHz: $boostClockGHz
+      tdp: $tdp
+      socketType: $socketType
+      integratedGraphics: $integratedGraphics
+      cacheMB: $cacheMB
     }
-  }
+  )
 }
 
-# Create GPU specs
 mutation CreateGPUSpecs(
   $productId: UUID!
   $chipset: String!
@@ -290,31 +96,42 @@ mutation CreateGPUSpecs(
   $lengthMM: Int
   $powerConnectors: String
 ) @auth(level: PUBLIC) {
-  gpu_insert(data: {
-    productId: $productId
-    chipset: $chipset
-    vramGB: $vramGB
-    vramType: $vramType
-    coreCount: $coreCount
-    baseClockMHz: $baseClockMHz
-    boostClockMHz: $boostClockMHz
-    tdp: $tdp
-    lengthMM: $lengthMM
-    powerConnectors: $powerConnectors
-  }) {
-    id
-    chipset
-    vramGB
-    vramType
-    product {
-      id
-      name
-      sku
+  gpu_insert(
+    data: {
+      productId: $productId
+      chipset: $chipset
+      vramGB: $vramGB
+      vramType: $vramType
+      coreCount: $coreCount
+      baseClockMHz: $baseClockMHz
+      boostClockMHz: $boostClockMHz
+      tdp: $tdp
+      lengthMM: $lengthMM
+      powerConnectors: $powerConnectors
     }
-  }
+  )
 }
 
-# Create Storage specs
+# ##################
+# CATEGORY MUTATIONS
+# ##################
+
+mutation CreateCategory(
+  $name: String!
+  $description: String!
+  $isParent: Boolean!
+  $parentId: UUID
+) @auth(level: PUBLIC) {
+  category_insert(
+    data: {
+      name: $name
+      description: $description
+      isParent: $isParent
+      parentId: $parentId
+    }
+  )
+}
+
 mutation CreateStorageSpecs(
   $productId: UUID!
   $storageType: String!
@@ -324,27 +141,19 @@ mutation CreateStorageSpecs(
   $readSpeedMBps: Int
   $writeSpeedMBps: Int
 ) @auth(level: PUBLIC) {
-  storage_insert(data: {
-    productId: $productId
-    storageType: $storageType
-    capacityGB: $capacityGB
-    interface: $interface
-    formFactor: $formFactor
-    readSpeedMBps: $readSpeedMBps
-    writeSpeedMBps: $writeSpeedMBps
-  }) {
-    id
-    storageType
-    capacityGB
-    product {
-      id
-      name
-      sku
+  storage_insert(
+    data: {
+      productId: $productId
+      storageType: $storageType
+      capacityGB: $capacityGB
+      interface: $interface
+      formFactor: $formFactor
+      readSpeedMBps: $readSpeedMBps
+      writeSpeedMBps: $writeSpeedMBps
     }
-  }
+  )
 }
 
-# Create PSU specs
 mutation CreatePSUSpecs(
   $productId: UUID!
   $wattage: Int!
@@ -352,25 +161,17 @@ mutation CreatePSUSpecs(
   $modular: String!
   $formFactor: String!
 ) @auth(level: PUBLIC) {
-  psu_insert(data: {
-    productId: $productId
-    wattage: $wattage
-    efficiencyRating: $efficiencyRating
-    modular: $modular
-    formFactor: $formFactor
-  }) {
-    id
-    wattage
-    efficiencyRating
-    product {
-      id
-      name
-      sku
+  psu_insert(
+    data: {
+      productId: $productId
+      wattage: $wattage
+      efficiencyRating: $efficiencyRating
+      modular: $modular
+      formFactor: $formFactor
     }
-  }
+  )
 }
 
-# Create CPU Cooler specs
 mutation CreateCPUCoolerSpecs(
   $productId: UUID!
   $coolerType: String!
@@ -380,27 +181,19 @@ mutation CreateCPUCoolerSpecs(
   $socketCompatibility: String!
   $heightMM: Int!
 ) @auth(level: PUBLIC) {
-  cpuCooler_insert(data: {
-    productId: $productId
-    coolerType: $coolerType
-    radiatorSizeMM: $radiatorSizeMM
-    fanSizeMM: $fanSizeMM
-    maxTDP: $maxTDP
-    socketCompatibility: $socketCompatibility
-    heightMM: $heightMM
-  }) {
-    id
-    coolerType
-    maxTDP
-    product {
-      id
-      name
-      sku
+  cpuCooler_insert(
+    data: {
+      productId: $productId
+      coolerType: $coolerType
+      radiatorSizeMM: $radiatorSizeMM
+      fanSizeMM: $fanSizeMM
+      maxTDP: $maxTDP
+      socketCompatibility: $socketCompatibility
+      heightMM: $heightMM
     }
-  }
+  )
 }
 
-# Create Case specs
 mutation CreateCaseSpecs(
   $productId: UUID!
   $formFactor: String!
@@ -408,35 +201,27 @@ mutation CreateCaseSpecs(
   $maxGPULengthMM: Int
   $maxCPUCoolerHeightMM: Int
   $maxPSULengthMM: Int
-  $driveSlots2_5: Int
-  $driveSlots3_5: Int
+  $driveSlotsTwoHalf: Int
+  $driveSlotsThreeHalf: Int
   $fanSlots: Int
   $radiatorSupport: String
 ) @auth(level: PUBLIC) {
-  case_insert(data: {
-    productId: $productId
-    formFactor: $formFactor
-    moboSupport: $moboSupport
-    maxGPULengthMM: $maxGPULengthMM
-    maxCPUCoolerHeightMM: $maxCPUCoolerHeightMM
-    maxPSULengthMM: $maxPSULengthMM
-    driveSlots2_5: $driveSlots2_5
-    driveSlots3_5: $driveSlots3_5
-    fanSlots: $fanSlots
-    radiatorSupport: $radiatorSupport
-  }) {
-    id
-    formFactor
-    moboSupport
-    product {
-      id
-      name
-      sku
+  case_insert(
+    data: {
+      productId: $productId
+      formFactor: $formFactor
+      moboSupport: $moboSupport
+      maxGPULengthMM: $maxGPULengthMM
+      maxCPUCoolerHeightMM: $maxCPUCoolerHeightMM
+      maxPSULengthMM: $maxPSULengthMM
+      driveSlotsTwoHalf: $driveSlotsTwoHalf
+      driveSlotsThreeHalf: $driveSlotsThreeHalf
+      fanSlots: $fanSlots
+      radiatorSupport: $radiatorSupport
     }
-  }
+  )
 }
 
-# Create RAM specs
 mutation CreateRAMSpecs(
   $productId: UUID!
   $memoryType: String!
@@ -446,29 +231,19 @@ mutation CreateRAMSpecs(
   $casLatency: Int
   $voltage: Float
 ) @auth(level: PUBLIC) {
-  ram_insert(data: {
-    productId: $productId
-    memoryType: $memoryType
-    speedMHz: $speedMHz
-    capacityGB: $capacityGB
-    modules: $modules
-    casLatency: $casLatency
-    voltage: $voltage
-  }) {
-    id
-    memoryType
-    speedMHz
-    capacityGB
-    modules
-    product {
-      id
-      name
-      sku
+  ram_insert(
+    data: {
+      productId: $productId
+      memoryType: $memoryType
+      speedMHz: $speedMHz
+      capacityGB: $capacityGB
+      modules: $modules
+      casLatency: $casLatency
+      voltage: $voltage
     }
-  }
+  )
 }
 
-# Create Motherboard specs
 mutation CreateMotherboardSpecs(
   $productId: UUID!
   $socketType: String!
@@ -481,26 +256,18 @@ mutation CreateMotherboardSpecs(
   $sataSlots: Int
   $pciSlots: Int
 ) @auth(level: PUBLIC) {
-  motherboard_insert(data: {
-    productId: $productId
-    socketType: $socketType
-    chipset: $chipset
-    formFactor: $formFactor
-    memoryType: $memoryType
-    memorySlots: $memorySlots
-    maxMemoryGB: $maxMemoryGB
-    m2Slots: $m2Slots
-    sataSlots: $sataSlots
-    pciSlots: $pciSlots
-  }) {
-    id
-    socketType
-    chipset
-    formFactor
-    product {
-      id
-      name
-      sku
+  motherboard_insert(
+    data: {
+      productId: $productId
+      socketType: $socketType
+      chipset: $chipset
+      formFactor: $formFactor
+      memoryType: $memoryType
+      memorySlots: $memorySlots
+      maxMemoryGB: $maxMemoryGB
+      m2Slots: $m2Slots
+      sataSlots: $sataSlots
+      pciSlots: $pciSlots
     }
-  }
+  )
 }
