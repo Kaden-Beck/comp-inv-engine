@@ -1,0 +1,13 @@
+specVersion: "v1"
+serviceId: "computer-hardware-bass-service"
+location: "us-west3"
+schemas:
+  - source: "./schema"
+    datasource:
+      postgresql:
+        database: "computer-hardware-bass-database"
+        cloudSql:
+          instanceId: "computer-hardware-bass-instance"
+          # schemaValidation: "STRICT"     # STRICT mode makes Postgres schema match Data Connect exactly.
+          # schemaValidation: "COMPATIBLE" # COMPATIBLE mode makes Postgres schema compatible with Data Connect.
+connectorDirs: ["./example"]
