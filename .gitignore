@@ -35,6 +35,3 @@ Thumbs.db
 *.sln
 *.sw?
 
-# Firebase
-.firebase/
-dataconnect/
