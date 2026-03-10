@@ -1,7 +1,7 @@
 {
   "name": "comp-inv-engine",
   "version": "1.0.0",
-  "description": "TS engine to manage inventory for Computer Hardware Inventory Manager. Built in TypeScript with Zod and vitest.",
+  "description": "TS engine to manage inventory for Computer Hardware Inventory Manager. Built in TypeScript with Zod and vitest. BASS is done through Firebase (Data Connect, Auth, Hosting) ",
   "license": "ISC",
   "author": "Kaden Beck (@Kaden-Beck)",
   "type": "module",
@@ -9,6 +9,8 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/main.js",
+    "cli": "node dist/cli.js",
+    "cli-dev": "npx tsc && node dist/cli.js",
     "dev": "npx tsc && node dist/main.js",
     "test": "vitest",
     "lint": "eslint ."
@@ -26,6 +28,8 @@
   },
   "dependencies": {
     "@dataconnect/generated": "file:src/dataconnect-generated",
+    "@tanstack-query-firebase/react": "^2.1.1",
+    "@tanstack/react-query": "^5.90.21",
     "firebase": "^12.10.0",
     "zod": "^4.3.6"
   }

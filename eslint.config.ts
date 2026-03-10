@@ -6,13 +6,13 @@ import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
   {
-    ignores: ['dist/**', 'src/dataconnect/**'],
+    ignores: ['dist/**', 'src/dataconnect-generated/**'],
   },
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     plugins: { js },
     extends: ['js/recommended'],
-    languageOptions: { globals: { ...globals.browser, ...globals.node } },
+    languageOptions: { globals: { ...globals.browser, ...globals.node, ...globals.vitest } },
   },
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,

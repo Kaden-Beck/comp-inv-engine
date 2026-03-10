@@ -1,9 +1,16 @@
-# Overview
+# Hardware Management System
+
+## Overview
 
 This TypeScript project serves as the first step in my Computer Hardware Store Inventory Management project.
 
 I am using this project to explore the functionality of TypeScript and practice writing full stack applications with React outside of the next.js ecosystem.
 
+## Usage
+
+`npm run dev-cli` to build and start the CLI via the console
+
+ 
 ## Development Environment
 
 Developed on Nobara Linux in Visual Studio Code
