@@ -1,5 +1,5 @@
 import { createInterface, type Interface } from 'readline';
-import { commandExit, commandHelp } from './basicCommands.js';
+import { commandExit, commandHelp } from './basicCLI.js';
 
 export type CLICommand = {
   name: string;
