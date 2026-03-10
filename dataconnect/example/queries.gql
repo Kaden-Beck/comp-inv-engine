@@ -1,0 +1,470 @@
+# ##################
+# PRODUCT QUERIES
+# ##################
+
+query ListProducts(
+  $orderByName: OrderDirection
+  $orderByQuantity: OrderDirection
+  $orderByPrice: OrderDirection
+  $limit: Int
+) @auth(level: PUBLIC) {
+  products(
+    orderBy: [
+      { name: $orderByName }
+      { quantity: $orderByQuantity }
+      { price: $orderByPrice }
+    ]
+    limit: $limit
+  ) {
+    id
+    name
+    sku
+    description
+    color
+    msrp
+    price
+    quantity
+    manufacturer {
+      id
+      name
+    }
+    category {
+      id
+      name
+    }
+  }
+}
+
+query GetProductById($id: UUID!) @auth(level: PUBLIC) {
+  product(id: $id) {
+    id
+    name
+    sku
+    description
+    color
+    msrp
+    price
+    quantity
+    manufacturer {
+      id
+      name
+      description
+    }
+    category {
+      id
+      name
+      description
+    }
+  }
+}
+
+query GetProductBySku($sku: String!) @auth(level: PUBLIC) {
+  products(where: { sku: { eq: $sku } }) {
+    id
+    name
+    sku
+    description
+    color
+    msrp
+    price
+    quantity
+    manufacturer {
+      id
+      name
+    }
+    category {
+      id
+      name
+    }
+  }
+}
+
+query SearchProductsByName($nameQuery: String, $limit: Int)
+@auth(level: PUBLIC) {
+  products(where: { name: { contains: $nameQuery } }, limit: $limit) {
+    id
+    name
+    sku
+    description
+    price
+    quantity
+    manufacturer {
+      id
+      name
+    }
+    category {
+      id
+      name
+    }
+  }
+}
+
+query GetProductsByCategory($categoryId: UUID!, $limit: Int)
+@auth(level: PUBLIC) {
+  products(where: { categoryId: { eq: $categoryId } }, limit: $limit) {
+    id
+    name
+    sku
+    price
+    quantity
+    manufacturer {
+      id
+      name
+    }
+  }
+}
+
+query GetProductsByManufacturer($manufacturerId: UUID!, $limit: Int)
+@auth(level: PUBLIC) {
+  products(where: { manufacturerId: { eq: $manufacturerId } }, limit: $limit) {
+    id
+    name
+    sku
+    price
+    quantity
+    category {
+      id
+      name
+    }
+  }
+}
+
+query GetLowStockProducts($threshold: Int!, $limit: Int) @auth(level: PUBLIC) {
+  products(
+    where: { quantity: { lt: $threshold } }
+    orderBy: [{ quantity: ASC }]
+    limit: $limit
+  ) {
+    id
+    name
+    sku
+    quantity
+    manufacturer {
+      id
+      name
+    }
+    category {
+      id
+      name
+    }
+  }
+}
+
+query ListProductImages($limit: Int) @auth(level: PUBLIC) {
+  productImages(limit: $limit) {
+    id
+    url
+    altText
+    product {
+      id
+      name
+      sku
+    }
+  }
+}
+
+query GetProductImagesByProductId($productId: UUID!) @auth(level: PUBLIC) {
+  productImages(where: { productId: { eq: $productId } }) {
+    id
+    url
+    altText
+  }
+}
+
+# ##################
+# MANUFACTURER QUERIES
+# ##################
+
+query ListManufacturers($orderByName: OrderDirection, $limit: Int)
+@auth(level: PUBLIC) {
+  manufacturers(orderBy: [{ name: $orderByName }], limit: $limit) {
+    id
+    name
+    description
+  }
+}
+
+query GetManufacturerById($id: UUID!) @auth(level: PUBLIC) {
+  manufacturer(id: $id) {
+    id
+    name
+    description
+  }
+}
+
+query GetManufacturerByName($name: String!) @auth(level: PUBLIC) {
+  manufacturers(where: { name: { eq: $name } }) {
+    id
+    name
+    description
+  }
+}
+
+# ##################
+# CATEGORY QUERIES
+# ##################
+
+query ListCategories($orderByName: OrderDirection, $limit: Int)
+@auth(level: PUBLIC) {
+  categories(
+    where: { parentId: { isNull: true } }
+    orderBy: [{ name: $orderByName }]
+    limit: $limit
+  ) {
+    id
+    name
+    description
+    isParent
+  }
+}
+
+query GetCategoryById($id: UUID!) @auth(level: PUBLIC) {
+  category(id: $id) {
+    id
+    name
+    description
+    isParent
+    parentId
+    parent {
+      id
+      name
+    }
+  }
+}
+
+query GetCategoryByName($name: String!) @auth(level: PUBLIC) {
+  categories(where: { name: { eq: $name } }) {
+    id
+    name
+    description
+    isParent
+    parent {
+      id
+      name
+    }
+  }
+}
+
+query GetChildCategories($parentId: UUID!, $limit: Int) @auth(level: PUBLIC) {
+  categories(
+    where: { parentId: { eq: $parentId } }
+    orderBy: [{ name: ASC }]
+    limit: $limit
+  ) {
+    id
+    name
+    description
+    isParent
+  }
+}
+
+query GetParentCategory($childId: UUID!) @auth(level: PUBLIC) {
+  category(id: $childId) {
+    id
+    name
+    parent {
+      id
+      name
+      description
+      parent {
+        id
+        name
+      }
+    }
+  }
+}
+
+# ##################
+# SPECIALIZED PRODUCT QUERIES
+# ##################
+
+query ListCPUs($limit: Int) @auth(level: PUBLIC) {
+  cpus(limit: $limit) {
+    id
+    cores
+    threads
+    baseClockGHz
+    boostClockGHz
+    tdp
+    socketType
+    integratedGraphics
+    cacheMB
+    product {
+      id
+      name
+      sku
+      price
+      quantity
+      manufacturer {
+        id
+        name
+      }
+    }
+  }
+}
+
+query ListGPUs($limit: Int) @auth(level: PUBLIC) {
+  gpus(limit: $limit) {
+    id
+    chipset
+    vramGB
+    vramType
+    coreCount
+    tdp
+    lengthMM
+    powerConnectors
+    product {
+      id
+      name
+      sku
+      price
+      quantity
+      manufacturer {
+        id
+        name
+      }
+    }
+  }
+}
+
+query ListStorage($limit: Int) @auth(level: PUBLIC) {
+  storages(limit: $limit) {
+    id
+    storageType
+    capacityGB
+    interface
+    formFactor
+    readSpeedMBps
+    writeSpeedMBps
+    product {
+      id
+      name
+      sku
+      price
+      quantity
+      manufacturer {
+        id
+        name
+      }
+    }
+  }
+}
+
+query ListPSUs($limit: Int) @auth(level: PUBLIC) {
+  psus(limit: $limit) {
+    id
+    wattage
+    efficiencyRating
+    modular
+    formFactor
+    product {
+      id
+      name
+      sku
+      price
+      quantity
+      manufacturer {
+        id
+        name
+      }
+    }
+  }
+}
+
+query ListCPUCoolers($limit: Int) @auth(level: PUBLIC) {
+  cpuCoolers(limit: $limit) {
+    id
+    coolerType
+    radiatorSizeMM
+    fanSizeMM
+    maxTDP
+    socketCompatibility
+    heightMM
+    product {
+      id
+      name
+      sku
+      price
+      quantity
+      manufacturer {
+        id
+        name
+      }
+    }
+  }
+}
+
+query ListCases($limit: Int) @auth(level: PUBLIC) {
+  cases(limit: $limit) {
+    id
+    formFactor
+    moboSupport
+    maxGPULengthMM
+    maxCPUCoolerHeightMM
+    maxPSULengthMM
+    driveSlotsTwoHalf
+    driveSlotsThreeHalf
+    fanSlots
+    radiatorSupport
+    product {
+      id
+      name
+      sku
+      price
+      quantity
+      manufacturer {
+        id
+        name
+      }
+    }
+  }
+}
+
+query ListRAM($limit: Int) @auth(level: PUBLIC) {
+  rams(limit: $limit) {
+    id
+    memoryType
+    speedMHz
+    capacityGB
+    modules
+    casLatency
+    voltage
+    product {
+      id
+      name
+      sku
+      price
+      quantity
+      manufacturer {
+        id
+        name
+      }
+    }
+  }
+}
+
+query ListMotherboards($limit: Int) @auth(level: PUBLIC) {
+  motherboards(limit: $limit) {
+    id
+    socketType
+    chipset
+    formFactor
+    memoryType
+    memorySlots
+    maxMemoryGB
+    m2Slots
+    sataSlots
+    pciSlots
+    product {
+      id
+      name
+      sku
+      price
+      quantity
+      manufacturer {
+        id
+        name
+      }
+    }
+  }
+}

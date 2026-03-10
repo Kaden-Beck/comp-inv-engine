@@ -1,0 +1,273 @@
+# ##################
+# PRODUCT MUTATIONS
+# ##################
+
+mutation CreateProduct(
+  $name: String!
+  $sku: String!
+  $description: String!
+  $color: String
+  $msrp: Float!
+  $price: Float
+  $quantity: Int!
+  $manufacturerId: UUID!
+  $categoryId: UUID!
+) @auth(level: PUBLIC) {
+  product_insert(
+    data: {
+      name: $name
+      sku: $sku
+      description: $description
+      color: $color
+      msrp: $msrp
+      price: $price
+      quantity: $quantity
+      manufacturerId: $manufacturerId
+      categoryId: $categoryId
+    }
+  )
+}
+
+mutation UpdateProduct(
+  $id: UUID!
+  $name: String
+  $description: String
+  $color: String
+  $price: Float
+  $quantity: Int
+  $categoryId: UUID
+) @auth(level: PUBLIC) {
+  product_update(
+    id: $id
+    data: {
+      name: $name
+      description: $description
+      color: $color
+      price: $price
+      quantity: $quantity
+      categoryId: $categoryId
+    }
+  )
+}
+
+mutation DeleteProduct($id: UUID!) @auth(level: PUBLIC) {
+  product_delete(id: $id)
+}
+
+# ##################
+# SPECIALIZED PRODUCT MUTATIONS
+# ##################
+
+mutation CreateCPUSpecs(
+  $productId: UUID!
+  $cores: Int!
+  $threads: Int!
+  $baseClockGHz: Float!
+  $boostClockGHz: Float
+  $tdp: Int!
+  $socketType: String!
+  $integratedGraphics: Boolean!
+  $cacheMB: Int
+) @auth(level: PUBLIC) {
+  cpu_insert(
+    data: {
+      productId: $productId
+      cores: $cores
+      threads: $threads
+      baseClockGHz: $baseClockGHz
+      boostClockGHz: $boostClockGHz
+      tdp: $tdp
+      socketType: $socketType
+      integratedGraphics: $integratedGraphics
+      cacheMB: $cacheMB
+    }
+  )
+}
+
+mutation CreateGPUSpecs(
+  $productId: UUID!
+  $chipset: String!
+  $vramGB: Int!
+  $vramType: String!
+  $coreCount: Int
+  $baseClockMHz: Int
+  $boostClockMHz: Int
+  $tdp: Int!
+  $lengthMM: Int
+  $powerConnectors: String
+) @auth(level: PUBLIC) {
+  gpu_insert(
+    data: {
+      productId: $productId
+      chipset: $chipset
+      vramGB: $vramGB
+      vramType: $vramType
+      coreCount: $coreCount
+      baseClockMHz: $baseClockMHz
+      boostClockMHz: $boostClockMHz
+      tdp: $tdp
+      lengthMM: $lengthMM
+      powerConnectors: $powerConnectors
+    }
+  )
+}
+
+# ##################
+# CATEGORY MUTATIONS
+# ##################
+
+mutation CreateCategory(
+  $name: String!
+  $description: String!
+  $isParent: Boolean!
+  $parentId: UUID
+) @auth(level: PUBLIC) {
+  category_insert(
+    data: {
+      name: $name
+      description: $description
+      isParent: $isParent
+      parentId: $parentId
+    }
+  )
+}
+
+mutation CreateStorageSpecs(
+  $productId: UUID!
+  $storageType: String!
+  $capacityGB: Int!
+  $interface: String!
+  $formFactor: String!
+  $readSpeedMBps: Int
+  $writeSpeedMBps: Int
+) @auth(level: PUBLIC) {
+  storage_insert(
+    data: {
+      productId: $productId
+      storageType: $storageType
+      capacityGB: $capacityGB
+      interface: $interface
+      formFactor: $formFactor
+      readSpeedMBps: $readSpeedMBps
+      writeSpeedMBps: $writeSpeedMBps
+    }
+  )
+}
+
+mutation CreatePSUSpecs(
+  $productId: UUID!
+  $wattage: Int!
+  $efficiencyRating: String!
+  $modular: String!
+  $formFactor: String!
+) @auth(level: PUBLIC) {
+  psu_insert(
+    data: {
+      productId: $productId
+      wattage: $wattage
+      efficiencyRating: $efficiencyRating
+      modular: $modular
+      formFactor: $formFactor
+    }
+  )
+}
+
+mutation CreateCPUCoolerSpecs(
+  $productId: UUID!
+  $coolerType: String!
+  $radiatorSizeMM: Int
+  $fanSizeMM: Int
+  $maxTDP: Int!
+  $socketCompatibility: String!
+  $heightMM: Int!
+) @auth(level: PUBLIC) {
+  cpuCooler_insert(
+    data: {
+      productId: $productId
+      coolerType: $coolerType
+      radiatorSizeMM: $radiatorSizeMM
+      fanSizeMM: $fanSizeMM
+      maxTDP: $maxTDP
+      socketCompatibility: $socketCompatibility
+      heightMM: $heightMM
+    }
+  )
+}
+
+mutation CreateCaseSpecs(
+  $productId: UUID!
+  $formFactor: String!
+  $moboSupport: String!
+  $maxGPULengthMM: Int
+  $maxCPUCoolerHeightMM: Int
+  $maxPSULengthMM: Int
+  $driveSlotsTwoHalf: Int
+  $driveSlotsThreeHalf: Int
+  $fanSlots: Int
+  $radiatorSupport: String
+) @auth(level: PUBLIC) {
+  case_insert(
+    data: {
+      productId: $productId
+      formFactor: $formFactor
+      moboSupport: $moboSupport
+      maxGPULengthMM: $maxGPULengthMM
+      maxCPUCoolerHeightMM: $maxCPUCoolerHeightMM
+      maxPSULengthMM: $maxPSULengthMM
+      driveSlotsTwoHalf: $driveSlotsTwoHalf
+      driveSlotsThreeHalf: $driveSlotsThreeHalf
+      fanSlots: $fanSlots
+      radiatorSupport: $radiatorSupport
+    }
+  )
+}
+
+mutation CreateRAMSpecs(
+  $productId: UUID!
+  $memoryType: String!
+  $speedMHz: Int!
+  $capacityGB: Int!
+  $modules: Int!
+  $casLatency: Int
+  $voltage: Float
+) @auth(level: PUBLIC) {
+  ram_insert(
+    data: {
+      productId: $productId
+      memoryType: $memoryType
+      speedMHz: $speedMHz
+      capacityGB: $capacityGB
+      modules: $modules
+      casLatency: $casLatency
+      voltage: $voltage
+    }
+  )
+}
+
+mutation CreateMotherboardSpecs(
+  $productId: UUID!
+  $socketType: String!
+  $chipset: String!
+  $formFactor: String!
+  $memoryType: String!
+  $memorySlots: Int!
+  $maxMemoryGB: Int!
+  $m2Slots: Int
+  $sataSlots: Int
+  $pciSlots: Int
+) @auth(level: PUBLIC) {
+  motherboard_insert(
+    data: {
+      productId: $productId
+      socketType: $socketType
+      chipset: $chipset
+      formFactor: $formFactor
+      memoryType: $memoryType
+      memorySlots: $memorySlots
+      maxMemoryGB: $maxMemoryGB
+      m2Slots: $m2Slots
+      sataSlots: $sataSlots
+      pciSlots: $pciSlots
+    }
+  )
+}
