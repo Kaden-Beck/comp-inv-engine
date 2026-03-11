@@ -110,6 +110,15 @@ export interface CreateGpuSpecsVariables {
   powerConnectors?: string | null;
 }
 
+export interface CreateManufacturerData {
+  manufacturer_insert: Manufacturer_Key;
+}
+
+export interface CreateManufacturerVariables {
+  name: string;
+  description: string;
+}
+
 export interface CreateMotherboardSpecsData {
   motherboard_insert: Motherboard_Key;
 }
@@ -852,6 +861,18 @@ export const createCategoryRef: CreateCategoryRef;
 
 export function createCategory(vars: CreateCategoryVariables): MutationPromise<CreateCategoryData, CreateCategoryVariables>;
 export function createCategory(dc: DataConnect, vars: CreateCategoryVariables): MutationPromise<CreateCategoryData, CreateCategoryVariables>;
+
+interface CreateManufacturerRef {
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: CreateManufacturerVariables): MutationRef<CreateManufacturerData, CreateManufacturerVariables>;
+  /* Allow users to pass in custom DataConnect instances */
+  (dc: DataConnect, vars: CreateManufacturerVariables): MutationRef<CreateManufacturerData, CreateManufacturerVariables>;
+  operationName: string;
+}
+export const createManufacturerRef: CreateManufacturerRef;
+
+export function createManufacturer(vars: CreateManufacturerVariables): MutationPromise<CreateManufacturerData, CreateManufacturerVariables>;
+export function createManufacturer(dc: DataConnect, vars: CreateManufacturerVariables): MutationPromise<CreateManufacturerData, CreateManufacturerVariables>;
 
 interface CreateStorageSpecsRef {
   /* Allow users to create refs without passing in DataConnect */

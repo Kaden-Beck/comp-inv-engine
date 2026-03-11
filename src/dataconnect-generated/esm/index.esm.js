@@ -77,6 +77,17 @@ export function createCategory(dcOrVars, vars) {
   return executeMutation(createCategoryRef(dcOrVars, vars));
 }
 
+export const createManufacturerRef = (dcOrVars, vars) => {
+  const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
+  dcInstance._useGeneratedSdk();
+  return mutationRef(dcInstance, 'CreateManufacturer', inputVars);
+}
+createManufacturerRef.operationName = 'CreateManufacturer';
+
+export function createManufacturer(dcOrVars, vars) {
+  return executeMutation(createManufacturerRef(dcOrVars, vars));
+}
+
 export const createStorageSpecsRef = (dcOrVars, vars) => {
   const { dc: dcInstance, vars: inputVars} = validateArgs(connectorConfig, dcOrVars, vars, true);
   dcInstance._useGeneratedSdk();

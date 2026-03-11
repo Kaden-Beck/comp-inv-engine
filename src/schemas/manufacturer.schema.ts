@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { OrderDirection } from '@dataconnect/generated';
 import type {
+  CreateManufacturerVariables,
   ListManufacturersData,
   ListManufacturersVariables,
   GetManufacturerByIdData,
@@ -11,6 +12,14 @@ import type {
 
 const uuidSchema = z.uuidv4();
 const orderDirectionSchema = z.nativeEnum(OrderDirection);
+
+// ---- Mutation variable schemas ----
+
+export const createManufacturerSchema: z.ZodType<CreateManufacturerVariables> =
+  z.object({
+    name: z.string().min(1),
+    description: z.string().min(1),
+  });
 
 // ---- Query variable schemas ----
 
@@ -57,6 +66,7 @@ export const manufacturerByNameSchema: z.ZodType<
 });
 
 // ---- Inferred types ----
+export type CreateManufacturerInput = z.infer<typeof createManufacturerSchema>;
 export type ListManufacturersInput = z.infer<typeof listManufacturersSchema>;
 export type GetManufacturerByIdInput = z.infer<
   typeof getManufacturerByIdSchema
