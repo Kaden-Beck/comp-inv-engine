@@ -6,15 +6,28 @@ import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
   {
-    ignores: ['dist/**', 'src/dataconnect-generated/**'],
+    ignores: ['dist/**', 'src/dataconnect-generated/**', 'eslint.config.ts'],
+  },
+  js.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  {
+    files: ['**/*.{ts,mts,cts,tsx}'],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+      },
+    },
   },
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    plugins: { js },
-    extends: ['js/recommended'],
-    languageOptions: { globals: { ...globals.browser, ...globals.node, ...globals.vitest } },
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...globals.vitest,
+      },
+    },
   },
-  tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   {
     settings: {

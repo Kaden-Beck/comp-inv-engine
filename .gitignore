@@ -37,4 +37,5 @@ Thumbs.db
 
 # Firebase
 dataconnect/.dataconnect
-.firebase
+.firebase/
+CLAUDE.md

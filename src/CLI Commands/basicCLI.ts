@@ -1,6 +1,6 @@
-import type { State } from './state.js';
+import type { State } from '../state.js';
 
-export async function commandExit(replState: State): Promise<void> {
+export async function exitCLI(replState: State): Promise<void> {
     const { readline } = replState;
 
     console.log("Closing the program... Goodbye!"); 
@@ -8,7 +8,7 @@ export async function commandExit(replState: State): Promise<void> {
     process.exit(0);
 }
 
-export async function commandHelp(replState: State): Promise<void>  {
+export async function helpCLI(replState: State): Promise<void>  {
     console.log("Welcome to InvManager!\nUsage:\nThis CLI tool is used manage computer hardware inventory.\nCommands:");
     const { commands } = replState;
 

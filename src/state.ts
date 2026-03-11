@@ -1,5 +1,7 @@
 import { createInterface, type Interface } from 'readline';
-import { commandExit, commandHelp } from './basicCommands.js';
+import { exitCLI, helpCLI } from './CLI Commands/basicCLI.js';
+import { DataConnect } from 'firebase/data-connect';
+import dcService from './lib/dataConnect/dcService.js';
 
 export type CLICommand = {
   name: string;
@@ -10,6 +12,7 @@ export type CLICommand = {
 export type State = {
   readline: Interface;
   commands: Record<string, CLICommand>;
+  dcService: DataConnect;
 };
 
 export function getCommands(): Record<string, CLICommand> {
@@ -17,12 +20,12 @@ export function getCommands(): Record<string, CLICommand> {
     exit: {
       name: 'exit',
       description: 'Exits the manager',
-      callback: commandExit,
+      callback: exitCLI,
     },
     help: {
       name: 'help',
       description: 'Return a list of available commands',
-      callback: commandHelp,
+      callback: helpCLI,
     },
   };
 }
@@ -39,5 +42,6 @@ export function initState(): State {
   return {
     readline: readLineInterface,
     commands: commandRecords,
+    dcService: dcService,
   };
 }

@@ -1,5 +1,6 @@
 import { startREPL } from './repl.js';
 
+
 async function main() {
   try {
     await startREPL();
@@ -11,6 +12,5 @@ async function main() {
     }
   }
 }
-
 
 await main();
