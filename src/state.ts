@@ -27,6 +27,7 @@ export function getCommands(): Record<string, CLICommand> {
       description: 'Return a list of available commands',
       callback: helpCLI,
     },
+    categories: 
   };
 }
 
