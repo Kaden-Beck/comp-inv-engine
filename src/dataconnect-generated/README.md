@@ -42,6 +42,7 @@ This README will guide you through the process of using the generated JavaScript
   - [*CreateCPUSpecs*](#createcpuspecs)
   - [*CreateGPUSpecs*](#creategpuspecs)
   - [*CreateCategory*](#createcategory)
+  - [*CreateManufacturer*](#createmanufacturer)
   - [*CreateStorageSpecs*](#createstoragespecs)
   - [*CreatePSUSpecs*](#createpsuspecs)
   - [*CreateCPUCoolerSpecs*](#createcpucoolerspecs)
@@ -3995,6 +3996,118 @@ console.log(data.category_insert);
 executeMutation(ref).then((response) => {
   const data = response.data;
   console.log(data.category_insert);
+});
+```
+
+## CreateManufacturer
+You can execute the `CreateManufacturer` mutation using the following action shortcut function, or by calling `executeMutation()` after calling the following `MutationRef` function, both of which are defined in [dataconnect-generated/index.d.ts](./index.d.ts):
+```typescript
+createManufacturer(vars: CreateManufacturerVariables): MutationPromise<CreateManufacturerData, CreateManufacturerVariables>;
+
+interface CreateManufacturerRef {
+  ...
+  /* Allow users to create refs without passing in DataConnect */
+  (vars: CreateManufacturerVariables): MutationRef<CreateManufacturerData, CreateManufacturerVariables>;
+}
+export const createManufacturerRef: CreateManufacturerRef;
+```
+You can also pass in a `DataConnect` instance to the action shortcut function or `MutationRef` function.
+```typescript
+createManufacturer(dc: DataConnect, vars: CreateManufacturerVariables): MutationPromise<CreateManufacturerData, CreateManufacturerVariables>;
+
+interface CreateManufacturerRef {
+  ...
+  (dc: DataConnect, vars: CreateManufacturerVariables): MutationRef<CreateManufacturerData, CreateManufacturerVariables>;
+}
+export const createManufacturerRef: CreateManufacturerRef;
+```
+
+If you need the name of the operation without creating a ref, you can retrieve the operation name by calling the `operationName` property on the createManufacturerRef:
+```typescript
+const name = createManufacturerRef.operationName;
+console.log(name);
+```
+
+### Variables
+The `CreateManufacturer` mutation requires an argument of type `CreateManufacturerVariables`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+
+```typescript
+export interface CreateManufacturerVariables {
+  name: string;
+  description: string;
+}
+```
+### Return Type
+Recall that executing the `CreateManufacturer` mutation returns a `MutationPromise` that resolves to an object with a `data` property.
+
+The `data` property is an object of type `CreateManufacturerData`, which is defined in [dataconnect-generated/index.d.ts](./index.d.ts). It has the following fields:
+```typescript
+export interface CreateManufacturerData {
+  manufacturer_insert: Manufacturer_Key;
+}
+```
+### Using `CreateManufacturer`'s action shortcut function
+
+```typescript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, createManufacturer, CreateManufacturerVariables } from '@dataconnect/generated';
+
+// The `CreateManufacturer` mutation requires an argument of type `CreateManufacturerVariables`:
+const createManufacturerVars: CreateManufacturerVariables = {
+  name: ..., 
+  description: ..., 
+};
+
+// Call the `createManufacturer()` function to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await createManufacturer(createManufacturerVars);
+// Variables can be defined inline as well.
+const { data } = await createManufacturer({ name: ..., description: ..., });
+
+// You can also pass in a `DataConnect` instance to the action shortcut function.
+const dataConnect = getDataConnect(connectorConfig);
+const { data } = await createManufacturer(dataConnect, createManufacturerVars);
+
+console.log(data.manufacturer_insert);
+
+// Or, you can use the `Promise` API.
+createManufacturer(createManufacturerVars).then((response) => {
+  const data = response.data;
+  console.log(data.manufacturer_insert);
+});
+```
+
+### Using `CreateManufacturer`'s `MutationRef` function
+
+```typescript
+import { getDataConnect, executeMutation } from 'firebase/data-connect';
+import { connectorConfig, createManufacturerRef, CreateManufacturerVariables } from '@dataconnect/generated';
+
+// The `CreateManufacturer` mutation requires an argument of type `CreateManufacturerVariables`:
+const createManufacturerVars: CreateManufacturerVariables = {
+  name: ..., 
+  description: ..., 
+};
+
+// Call the `createManufacturerRef()` function to get a reference to the mutation.
+const ref = createManufacturerRef(createManufacturerVars);
+// Variables can be defined inline as well.
+const ref = createManufacturerRef({ name: ..., description: ..., });
+
+// You can also pass in a `DataConnect` instance to the `MutationRef` function.
+const dataConnect = getDataConnect(connectorConfig);
+const ref = createManufacturerRef(dataConnect, createManufacturerVars);
+
+// Call `executeMutation()` on the reference to execute the mutation.
+// You can use the `await` keyword to wait for the promise to resolve.
+const { data } = await executeMutation(ref);
+
+console.log(data.manufacturer_insert);
+
+// Or, you can use the `Promise` API.
+executeMutation(ref).then((response) => {
+  const data = response.data;
+  console.log(data.manufacturer_insert);
 });
 ```
 

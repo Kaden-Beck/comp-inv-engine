@@ -49,6 +49,7 @@ You can also follow the instructions from the [Data Connect documentation](https
   - [*CreateCPUSpecs*](#createcpuspecs)
   - [*CreateGPUSpecs*](#creategpuspecs)
   - [*CreateCategory*](#createcategory)
+  - [*CreateManufacturer*](#createmanufacturer)
   - [*CreateStorageSpecs*](#createstoragespecs)
   - [*CreatePSUSpecs*](#createpsuspecs)
   - [*CreateCPUCoolerSpecs*](#createcpucoolerspecs)
@@ -3272,6 +3273,102 @@ export default function CreateCategoryComponent() {
   // If the Mutation is successful, you can access the data returned using the `UseMutationResult.data` field.
   if (mutation.isSuccess) {
     console.log(mutation.data.category_insert);
+  }
+  return <div>Mutation execution {mutation.isSuccess ? 'successful' : 'failed'}!</div>;
+}
+```
+
+## CreateManufacturer
+You can execute the `CreateManufacturer` Mutation using the `UseMutationResult` object returned by the following Mutation hook function (which is defined in [dataconnect-generated/react/index.d.ts](./index.d.ts)):
+```javascript
+useCreateManufacturer(options?: useDataConnectMutationOptions<CreateManufacturerData, FirebaseError, CreateManufacturerVariables>): UseDataConnectMutationResult<CreateManufacturerData, CreateManufacturerVariables>;
+```
+You can also pass in a `DataConnect` instance to the Mutation hook function.
+```javascript
+useCreateManufacturer(dc: DataConnect, options?: useDataConnectMutationOptions<CreateManufacturerData, FirebaseError, CreateManufacturerVariables>): UseDataConnectMutationResult<CreateManufacturerData, CreateManufacturerVariables>;
+```
+
+### Variables
+The `CreateManufacturer` Mutation requires an argument of type `CreateManufacturerVariables`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+
+```javascript
+export interface CreateManufacturerVariables {
+  name: string;
+  description: string;
+}
+```
+### Return Type
+Recall that calling the `CreateManufacturer` Mutation hook function returns a `UseMutationResult` object. This object holds the state of your Mutation, including whether the Mutation is loading, has completed, or has succeeded/failed, among other things.
+
+To check the status of a Mutation, use the `UseMutationResult.status` field. You can also check for pending / success / error status using the `UseMutationResult.isPending`, `UseMutationResult.isSuccess`, and `UseMutationResult.isError` fields.
+
+To execute the Mutation, call `UseMutationResult.mutate()`. This function executes the Mutation, but does not return the data from the Mutation.
+
+To access the data returned by a Mutation, use the `UseMutationResult.data` field. The data for the `CreateManufacturer` Mutation is of type `CreateManufacturerData`, which is defined in [dataconnect-generated/index.d.ts](../index.d.ts). It has the following fields:
+```javascript
+export interface CreateManufacturerData {
+  manufacturer_insert: Manufacturer_Key;
+}
+```
+
+To learn more about the `UseMutationResult` object, see the [TanStack React Query documentation](https://tanstack.com/query/v5/docs/framework/react/reference/useMutation).
+
+### Using `CreateManufacturer`'s Mutation hook function
+
+```javascript
+import { getDataConnect } from 'firebase/data-connect';
+import { connectorConfig, CreateManufacturerVariables } from '@dataconnect/generated';
+import { useCreateManufacturer } from '@dataconnect/generated/react'
+
+export default function CreateManufacturerComponent() {
+  // Call the Mutation hook function to get a `UseMutationResult` object which holds the state of your Mutation.
+  const mutation = useCreateManufacturer();
+
+  // You can also pass in a `DataConnect` instance to the Mutation hook function.
+  const dataConnect = getDataConnect(connectorConfig);
+  const mutation = useCreateManufacturer(dataConnect);
+
+  // You can also pass in a `useDataConnectMutationOptions` object to the Mutation hook function.
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  const mutation = useCreateManufacturer(options);
+
+  // You can also pass both a `DataConnect` instance and a `useDataConnectMutationOptions` object.
+  const dataConnect = getDataConnect(connectorConfig);
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  const mutation = useCreateManufacturer(dataConnect, options);
+
+  // After calling the Mutation hook function, you must call `UseMutationResult.mutate()` to execute the Mutation.
+  // The `useCreateManufacturer` Mutation requires an argument of type `CreateManufacturerVariables`:
+  const createManufacturerVars: CreateManufacturerVariables = {
+    name: ..., 
+    description: ..., 
+  };
+  mutation.mutate(createManufacturerVars);
+  // Variables can be defined inline as well.
+  mutation.mutate({ name: ..., description: ..., });
+
+  // You can also pass in a `useDataConnectMutationOptions` object to `UseMutationResult.mutate()`.
+  const options = {
+    onSuccess: () => { console.log('Mutation succeeded!'); }
+  };
+  mutation.mutate(createManufacturerVars, options);
+
+  // Then, you can render your component dynamically based on the status of the Mutation.
+  if (mutation.isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (mutation.isError) {
+    return <div>Error: {mutation.error.message}</div>;
+  }
+
+  // If the Mutation is successful, you can access the data returned using the `UseMutationResult.data` field.
+  if (mutation.isSuccess) {
+    console.log(mutation.data.manufacturer_insert);
   }
   return <div>Mutation execution {mutation.isSuccess ? 'successful' : 'failed'}!</div>;
 }

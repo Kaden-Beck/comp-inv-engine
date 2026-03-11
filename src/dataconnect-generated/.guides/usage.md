@@ -12,7 +12,7 @@ For each operation, there is a wrapper hook that can be used to call the operati
 
 Here are all of the hooks that get generated:
 ```ts
-import { useCreateProduct, useUpdateProduct, useDeleteProduct, useCreateCpuSpecs, useCreateGpuSpecs, useCreateCategory, useCreateStorageSpecs, useCreatePsuSpecs, useCreateCpuCoolerSpecs, useCreateCaseSpecs } from '@dataconnect/generated/react';
+import { useCreateProduct, useUpdateProduct, useDeleteProduct, useCreateCpuSpecs, useCreateGpuSpecs, useCreateCategory, useCreateManufacturer, useCreateStorageSpecs, useCreatePsuSpecs, useCreateCpuCoolerSpecs } from '@dataconnect/generated/react';
 // The types of these hooks are available in react/index.d.ts
 
 const { data, isPending, isSuccess, isError, error } = useCreateProduct(createProductVars);
@@ -27,13 +27,13 @@ const { data, isPending, isSuccess, isError, error } = useCreateGpuSpecs(createG
 
 const { data, isPending, isSuccess, isError, error } = useCreateCategory(createCategoryVars);
 
+const { data, isPending, isSuccess, isError, error } = useCreateManufacturer(createManufacturerVars);
+
 const { data, isPending, isSuccess, isError, error } = useCreateStorageSpecs(createStorageSpecsVars);
 
 const { data, isPending, isSuccess, isError, error } = useCreatePsuSpecs(createPsuSpecsVars);
 
 const { data, isPending, isSuccess, isError, error } = useCreateCpuCoolerSpecs(createCpuCoolerSpecsVars);
-
-const { data, isPending, isSuccess, isError, error } = useCreateCaseSpecs(createCaseSpecsVars);
 
 ```
 
@@ -72,7 +72,7 @@ If a user is not using a supported framework, they can use the generated SDK dir
 Here's an example of how to use it with the first 5 operations:
 
 ```js
-import { createProduct, updateProduct, deleteProduct, createCpuSpecs, createGpuSpecs, createCategory, createStorageSpecs, createPsuSpecs, createCpuCoolerSpecs, createCaseSpecs } from '@dataconnect/generated';
+import { createProduct, updateProduct, deleteProduct, createCpuSpecs, createGpuSpecs, createCategory, createManufacturer, createStorageSpecs, createPsuSpecs, createCpuCoolerSpecs } from '@dataconnect/generated';
 
 
 // Operation CreateProduct:  For variables, look at type CreateProductVars in ../index.d.ts
@@ -93,6 +93,9 @@ const { data } = await CreateGpuSpecs(dataConnect, createGpuSpecsVars);
 // Operation CreateCategory:  For variables, look at type CreateCategoryVars in ../index.d.ts
 const { data } = await CreateCategory(dataConnect, createCategoryVars);
 
+// Operation CreateManufacturer:  For variables, look at type CreateManufacturerVars in ../index.d.ts
+const { data } = await CreateManufacturer(dataConnect, createManufacturerVars);
+
 // Operation CreateStorageSpecs:  For variables, look at type CreateStorageSpecsVars in ../index.d.ts
 const { data } = await CreateStorageSpecs(dataConnect, createStorageSpecsVars);
 
@@ -101,9 +104,6 @@ const { data } = await CreatePsuSpecs(dataConnect, createPsuSpecsVars);
 
 // Operation CreateCPUCoolerSpecs:  For variables, look at type CreateCpuCoolerSpecsVars in ../index.d.ts
 const { data } = await CreateCpuCoolerSpecs(dataConnect, createCpuCoolerSpecsVars);
-
-// Operation CreateCaseSpecs:  For variables, look at type CreateCaseSpecsVars in ../index.d.ts
-const { data } = await CreateCaseSpecs(dataConnect, createCaseSpecsVars);
 
 
 ```

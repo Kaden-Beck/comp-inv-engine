@@ -3,7 +3,10 @@ import type { State } from '../state.js';
 export async function exitCLI(replState: State): Promise<void> {
     const { readline } = replState;
 
-    console.log("Closing the program... Goodbye!"); 
+    console.log("Closing the program... Goodbye!");
+    if (process.env.USE_EMULATOR === 'true') {
+        console.log("Note: Stop the Firebase emulator manually (Ctrl+C in its terminal).");
+    }
     readline.close();
     process.exit(0);
 }

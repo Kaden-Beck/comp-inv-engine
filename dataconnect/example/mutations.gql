@@ -132,6 +132,22 @@ mutation CreateCategory(
   )
 }
 
+# ##################
+# MANUFACTURER MUTATIONS
+# ##################
+
+mutation CreateManufacturer(
+  $name: String!
+  $description: String!
+) @auth(level: PUBLIC) {
+  manufacturer_insert(
+    data: {
+      name: $name
+      description: $description
+    }
+  )
+}
+
 mutation CreateStorageSpecs(
   $productId: UUID!
   $storageType: String!

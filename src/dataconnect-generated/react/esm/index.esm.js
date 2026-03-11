@@ -1,4 +1,4 @@
-import { createProductRef, updateProductRef, deleteProductRef, createCpuSpecsRef, createGpuSpecsRef, createCategoryRef, createStorageSpecsRef, createPsuSpecsRef, createCpuCoolerSpecsRef, createCaseSpecsRef, createRamSpecsRef, createMotherboardSpecsRef, listProductsRef, getProductByIdRef, getProductBySkuRef, searchProductsByNameRef, getProductsByCategoryRef, getProductsByManufacturerRef, getLowStockProductsRef, listProductImagesRef, getProductImagesByProductIdRef, listManufacturersRef, getManufacturerByIdRef, getManufacturerByNameRef, listCategoriesRef, getCategoryByIdRef, getCategoryByNameRef, getChildCategoriesRef, getParentCategoryRef, listCpUsRef, listGpUsRef, listStorageRef, listPsUsRef, listCpuCoolersRef, listCasesRef, listRamRef, listMotherboardsRef, connectorConfig } from '../../esm/index.esm.js';
+import { createProductRef, updateProductRef, deleteProductRef, createCpuSpecsRef, createGpuSpecsRef, createCategoryRef, createManufacturerRef, createStorageSpecsRef, createPsuSpecsRef, createCpuCoolerSpecsRef, createCaseSpecsRef, createRamSpecsRef, createMotherboardSpecsRef, listProductsRef, getProductByIdRef, getProductBySkuRef, searchProductsByNameRef, getProductsByCategoryRef, getProductsByManufacturerRef, getLowStockProductsRef, listProductImagesRef, getProductImagesByProductIdRef, listManufacturersRef, getManufacturerByIdRef, getManufacturerByNameRef, listCategoriesRef, getCategoryByIdRef, getCategoryByNameRef, getChildCategoriesRef, getParentCategoryRef, listCpUsRef, listGpUsRef, listStorageRef, listPsUsRef, listCpuCoolersRef, listCasesRef, listRamRef, listMotherboardsRef, connectorConfig } from '../../esm/index.esm.js';
 import { validateArgs, CallerSdkTypeEnum } from 'firebase/data-connect';
 import { useDataConnectQuery, useDataConnectMutation, validateReactArgs } from '@tanstack-query-firebase/react/data-connect';
 
@@ -46,6 +46,14 @@ export function useCreateCategory(dcOrOptions, options) {
   const { dc: dcInstance, vars: inputOpts } = validateArgs(connectorConfig, dcOrOptions, options);
   function refFactory(vars) {
     return createCategoryRef(dcInstance, vars);
+  }
+  return useDataConnectMutation(refFactory, inputOpts, CallerSdkTypeEnum.GeneratedReact);
+}
+
+export function useCreateManufacturer(dcOrOptions, options) {
+  const { dc: dcInstance, vars: inputOpts } = validateArgs(connectorConfig, dcOrOptions, options);
+  function refFactory(vars) {
+    return createManufacturerRef(dcInstance, vars);
   }
   return useDataConnectMutation(refFactory, inputOpts, CallerSdkTypeEnum.GeneratedReact);
 }
