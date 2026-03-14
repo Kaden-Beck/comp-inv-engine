@@ -1,5 +1,8 @@
 import { createInterface, type Interface } from 'readline';
 import { exitCLI, helpCLI } from './CLI Commands/basicCLI.js';
+import { categoryCLI } from './CLI Commands/categoryCommands.js';
+import { manufacturerCLI } from './CLI Commands/manufacturerCommands.js';
+import { productCLI } from './CLI Commands/productCommands.js';
 import { DataConnect } from 'firebase/data-connect';
 import dcService from './lib/dataConnect/dcService.js';
 
@@ -27,7 +30,26 @@ export function getCommands(): Record<string, CLICommand> {
       description: 'Return a list of available commands',
       callback: helpCLI,
     },
-    categories: 
+    category: {
+      name: 'category',
+      description: 'Manage categories. Subcommands: ls [-s|--shallow], add [-p|--parent <name>]',
+      callback: categoryCLI,
+    },
+    product: {
+      name: 'product',
+      description: 'Manage products. Subcommands: find [-n|-i|-c|-m], add <category>, update <name> [--id]',
+      callback: productCLI,
+    },
+    manufacturer: {
+      name: 'manufacturer',
+      description: 'Manage manufacturers. Subcommands: ls, add',
+      callback: manufacturerCLI,
+    },
+    manu: {
+      name: 'manu',
+      description: 'Alias for manufacturer',
+      callback: manufacturerCLI,
+    },
   };
 }
 
