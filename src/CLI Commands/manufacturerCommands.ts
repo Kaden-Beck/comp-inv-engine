@@ -1,10 +1,13 @@
 import type { State } from '../state.js';
-import { parseFlags } from '../lib/parseFlags.js';
-import { prompt } from '../lib/promptHelper.js';
+import { parseFlags } from '../lib/cliHelpers/parseFlags.js';
+import { prompt } from '../lib/cliHelpers/promptHelper.js';
 import { getManufacturers, addManufacturer } from '../lib/dataConnect/dcAPI.js';
 import { createManufacturerSchema } from '../schemas/manufacturer.schema.js';
 
-export async function manufacturerCLI(state: State, ...args: string[]): Promise<void> {
+export async function manufacturerCLI(
+  state: State,
+  ...args: string[]
+): Promise<void> {
   const { positional } = parseFlags(args);
   const sub = positional[0];
 
@@ -13,7 +16,9 @@ export async function manufacturerCLI(state: State, ...args: string[]): Promise<
   } else if (sub === 'add') {
     await addManufacturerInteractive(state);
   } else {
-    console.log('Usage:\n  manufacturer ls\n  manufacturer add\n  manu ls\n  manu add');
+    console.log(
+      'Usage:\n  manufacturer ls\n  manufacturer add\n  manu ls\n  manu add',
+    );
   }
 }
 

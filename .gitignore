@@ -38,4 +38,7 @@ Thumbs.db
 # Firebase
 dataconnect/.dataconnect
 .firebase
+
+# Claude Code Artifacts
+.claude
 CLAUDE.md

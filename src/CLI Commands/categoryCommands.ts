@@ -1,14 +1,21 @@
 import type { State } from '../state.js';
-import { parseFlags } from '../lib/parseFlags.js';
-import { prompt } from '../lib/promptHelper.js';
-import { getCategories, addCategory, getCategoryByName } from '../lib/dataConnect/dcAPI.js';
+import { parseFlags } from '../lib/cliHelpers/parseFlags.js';
+import { prompt } from '../lib/cliHelpers/promptHelper.js';
+import {
+  getCategories,
+  addCategory,
+  getCategoryByName,
+} from '../lib/dataConnect/dcAPI.js';
 import {
   getChildCategoriesRecursive,
   getCategoryUUIDByName,
 } from './printProducts.js';
 import { createCategorySchema } from '../schemas/category.schema.js';
 
-export async function categoryCLI(state: State, ...args: string[]): Promise<void> {
+export async function categoryCLI(
+  state: State,
+  ...args: string[]
+): Promise<void> {
   const { positional, flags } = parseFlags(args);
   const sub = positional[0];
 
@@ -17,11 +24,15 @@ export async function categoryCLI(state: State, ...args: string[]): Promise<void
   } else if (sub === 'add') {
     await addCategoryInteractive(state, flags);
   } else {
-    console.log('Usage:\n  category ls [-s|--shallow]\n  category add [-p|--parent <parentName>]');
+    console.log(
+      'Usage:\n  category ls [-s|--shallow]\n  category add [-p|--parent <parentName>]',
+    );
   }
 }
 
-async function listCategories(flags: Record<string, string | true>): Promise<void> {
+async function listCategories(
+  flags: Record<string, string | true>,
+): Promise<void> {
   const result = await getCategories();
   const rootCategories = result.data.categories;
 
@@ -73,9 +84,15 @@ async function addCategoryInteractive(
     }
     parentId = resolved;
   } else {
-    const isTopLevel = (await prompt(readline, 'Is this a top-level category? (y/n): ')).trim().toLowerCase();
+    const isTopLevel = (
+      await prompt(readline, 'Is this a top-level category? (y/n): ')
+    )
+      .trim()
+      .toLowerCase();
     if (isTopLevel !== 'y') {
-      const parentName = (await prompt(readline, 'Parent category name: ')).trim();
+      const parentName = (
+        await prompt(readline, 'Parent category name: ')
+      ).trim();
       if (!parentName) {
         console.log('Parent name is required.');
         return;
