@@ -1,13 +1,12 @@
 import { initState } from './state.js';
 
 export function cleanInput(input: string) {
-  const cleanOutput: string[] = input.trim().split(/\s+/);
+  const tokens: string[] = input.trim().split(/\s+/);
 
-  for (let i = 0; i < cleanOutput.length; i++) {
-    cleanOutput[i] = cleanOutput[i].toLowerCase().trim();
-  }
-
-  return cleanOutput;
+  // Only lowercase the command and subcommand (first two tokens).
+  // Flag values (e.g. category names, SKUs) must preserve their original casing
+  // because the DB does exact-match lookups on them.
+  return tokens.map((token, i) => (i < 2 ? token.toLowerCase() : token));
 }
 
 export async function startREPL(): Promise<void> {

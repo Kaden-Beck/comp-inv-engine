@@ -8,6 +8,7 @@ import {
   addRAMSpecs,
   getManufacturerByName,
   getCategoryByName,
+  getProductBySku,
 } from './dcAPI.js';
 
 async function getOrCreateManufacturer(name: string, description: string): Promise<string> {
@@ -33,6 +34,17 @@ async function getOrCreateCategory(
   return result.data.category_insert.id;
 }
 
+async function getOrCreateProduct(
+  vars: Parameters<typeof addProduct>[1],
+): Promise<{ id: string; isNew: boolean }> {
+  const existing = await getProductBySku({ sku: vars.sku });
+  if (existing.data.products.length > 0) {
+    return { id: existing.data.products[0].id, isNew: false };
+  }
+  const result = await addProduct(vars);
+  return { id: result.data.product_insert.id, isNew: true };
+}
+
 export async function seedEmulator(): Promise<void> {
   console.log('Creating manufacturers...');
   const intelId = await getOrCreateManufacturer('Intel', 'Leading CPU and chipset manufacturer');
@@ -56,7 +68,7 @@ export async function seedEmulator(): Promise<void> {
   console.log('Creating products...');
 
   // Intel Core i9-14900K
-  const i9Result = await addProduct({
+  const i9 = await getOrCreateProduct({
     name: 'Intel Core i9-14900K',
     sku: 'BX8071514900K',
     description: 'Intel 14th Gen flagship desktop CPU with 24 cores (8P+16E)',
@@ -66,20 +78,22 @@ export async function seedEmulator(): Promise<void> {
     manufacturerId: intelId,
     categoryId: cpuCatId,
   });
-  await addCPUSpecs({
-    productId: i9Result.data.product_insert.id,
-    cores: 24,
-    threads: 32,
-    baseClockGHz: 3.2,
-    boostClockGHz: 6.0,
-    tdp: 125,
-    socketType: 'LGA1700',
-    integratedGraphics: true,
-    cacheMB: 36,
-  });
+  if (i9.isNew) {
+    await addCPUSpecs({
+      productId: i9.id,
+      cores: 24,
+      threads: 32,
+      baseClockGHz: 3.2,
+      boostClockGHz: 6.0,
+      tdp: 125,
+      socketType: 'LGA1700',
+      integratedGraphics: true,
+      cacheMB: 36,
+    });
+  }
 
   // AMD Ryzen 9 7950X
-  const r9Result = await addProduct({
+  const r9 = await getOrCreateProduct({
     name: 'AMD Ryzen 9 7950X',
     sku: '100-100000514WOF',
     description: 'AMD Zen 4 flagship with 16 cores for workstation-class performance',
@@ -89,20 +103,22 @@ export async function seedEmulator(): Promise<void> {
     manufacturerId: amdId,
     categoryId: cpuCatId,
   });
-  await addCPUSpecs({
-    productId: r9Result.data.product_insert.id,
-    cores: 16,
-    threads: 32,
-    baseClockGHz: 4.5,
-    boostClockGHz: 5.7,
-    tdp: 170,
-    socketType: 'AM5',
-    integratedGraphics: false,
-    cacheMB: 64,
-  });
+  if (r9.isNew) {
+    await addCPUSpecs({
+      productId: r9.id,
+      cores: 16,
+      threads: 32,
+      baseClockGHz: 4.5,
+      boostClockGHz: 5.7,
+      tdp: 170,
+      socketType: 'AM5',
+      integratedGraphics: false,
+      cacheMB: 64,
+    });
+  }
 
   // Nvidia RTX 4080 Super
-  const rtx4080Result = await addProduct({
+  const rtx4080 = await getOrCreateProduct({
     name: 'Nvidia GeForce RTX 4080 Super',
     sku: 'RTX4080S-16G',
     description: 'High-end Ada Lovelace GPU with 16GB GDDR6X',
@@ -112,21 +128,23 @@ export async function seedEmulator(): Promise<void> {
     manufacturerId: nvidiaId,
     categoryId: gpuCatId,
   });
-  await addGPUSpecs({
-    productId: rtx4080Result.data.product_insert.id,
-    chipset: 'AD103',
-    vramGB: 16,
-    vramType: 'GDDR6X',
-    coreCount: 10240,
-    baseClockMHz: 2295,
-    boostClockMHz: 2550,
-    tdp: 320,
-    lengthMM: 336,
-    powerConnectors: '1x16-pin',
-  });
+  if (rtx4080.isNew) {
+    await addGPUSpecs({
+      productId: rtx4080.id,
+      chipset: 'AD103',
+      vramGB: 16,
+      vramType: 'GDDR6X',
+      coreCount: 10240,
+      baseClockMHz: 2295,
+      boostClockMHz: 2550,
+      tdp: 320,
+      lengthMM: 336,
+      powerConnectors: '1x16-pin',
+    });
+  }
 
   // Samsung 990 Pro NVMe
-  const nvmeResult = await addProduct({
+  const nvme = await getOrCreateProduct({
     name: 'Samsung 990 Pro 2TB NVMe',
     sku: 'MZ-V9P2T0B/AM',
     description: 'PCIe 4.0 NVMe SSD with read speeds up to 7450 MB/s',
@@ -136,18 +154,20 @@ export async function seedEmulator(): Promise<void> {
     manufacturerId: samsungId,
     categoryId: storageCatId,
   });
-  await addStorageSpecs({
-    productId: nvmeResult.data.product_insert.id,
-    storageType: 'NVMe',
-    capacityGB: 2000,
-    interface: 'PCIe 4.0 x4',
-    formFactor: 'M.2 2280',
-    readSpeedMBps: 7450,
-    writeSpeedMBps: 6900,
-  });
+  if (nvme.isNew) {
+    await addStorageSpecs({
+      productId: nvme.id,
+      storageType: 'NVMe',
+      capacityGB: 2000,
+      interface: 'PCIe 4.0 x4',
+      formFactor: 'M.2 2280',
+      readSpeedMBps: 7450,
+      writeSpeedMBps: 6900,
+    });
+  }
 
   // Corsair Vengeance DDR5
-  const ramResult = await addProduct({
+  const ram = await getOrCreateProduct({
     name: 'Corsair Vengeance 32GB DDR5-6000',
     sku: 'CMK32GX5M2B6000C30',
     description: '2x16GB DDR5-6000 kit with Intel XMP 3.0 support',
@@ -157,15 +177,17 @@ export async function seedEmulator(): Promise<void> {
     manufacturerId: corsairId,
     categoryId: ramCatId,
   });
-  await addRAMSpecs({
-    productId: ramResult.data.product_insert.id,
-    memoryType: 'DDR5',
-    speedMHz: 6000,
-    capacityGB: 32,
-    modules: 2,
-    casLatency: 30,
-    voltage: 1.35,
-  });
+  if (ram.isNew) {
+    await addRAMSpecs({
+      productId: ram.id,
+      memoryType: 'DDR5',
+      speedMHz: 6000,
+      capacityGB: 32,
+      modules: 2,
+      casLatency: 30,
+      voltage: 1.35,
+    });
+  }
 
   console.log('Seed complete. Sample data created successfully.');
 }
