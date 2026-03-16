@@ -12,9 +12,18 @@ export default defineConfig([
   ...tseslint.configs.recommendedTypeChecked,
   {
     files: ['**/*.{ts,mts,cts,tsx}'],
+    ignores: ['tests/**'],
     languageOptions: {
       parserOptions: {
         projectService: true,
+      },
+    },
+  },
+  {
+    files: ['tests/**/*.{ts,tsx}'],
+    languageOptions: {
+      parserOptions: {
+        project: './tsconfig.test.json',
       },
     },
   },

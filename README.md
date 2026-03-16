@@ -2,31 +2,39 @@
 
 ## Overview
 
-This TypeScript project serves as the first step in my Computer Hardware Store Inventory Management project.
+This TypeScript project is a Computer Hardware Store Inventory Management System.
 
-I am using this project to explore the functionality of TypeScript and practice writing full stack applications with React outside of the next.js ecosystem.
+I am using this project to explore TypeScript and practice writing full-stack applications with React outside of the Next.js ecosystem.
 
-## Usage
+## Scripts
 
-`npm run dev-cli` to start the CLI app and start local emulator (seeds data)
-`npm run cli` to start the CLI app and connect to production server
+| Command | Description |
+|---|---|
+| `npm run dev-cli` | Build and run the CLI against the local emulator |
+| `npm run cli` | Build and run the CLI against the production server |
+| `npm run seed` | Seed the local emulator with sample data (requires emulator running) |
+| `npm run build` | Compile TypeScript |
+| `npm test` | Run Vitest test suite |
+| `npm run lint` | Run ESLint |
 
-1. `help` - Display help information
-2. `exit` - Exits program and kills emulator
-3. `category ls` - Return a list of categories and sub-categories (recursively)
-   - `-s, --shallow` - Returns only shallow categories
-4. `category add` - Prompts user through adding a new category
-   - `-p, --parent <categoryName>` - Creates a category as a child of the provided category
-5. `product find` - Return product details, by default expects a product name
-   - `-n, --name <productName>` - Searches inventory for a product matching name
-   - `-i, --id <productId>` - Searches inventory for a product with provided ID
-   - `-c, --category <categoryName>` - Searches inventory for products within provided category (including sub-categories)
-   - `-m, --manufacturer [manufacturerName]` - Searches inventory for products by manufacturer name
-6. `product add <categoryName>` - Prompts user through adding a product of provided category
-7. `product update <productName>` - Prompts user through updating a product by name
-   - `--id <productId>` - Accepts a product ID instead of name
-8. `manufacturer ls` (`manu ls`) - Lists manufacturers
-9. `manufacturer add` (`manu add`) - Prompts user to add a manufacturer
+## CLI Commands
+
+1. `help` — Display help information
+2. `exit` — Exit the program and kill the emulator
+3. `category ls` — List categories and sub-categories (recursively)
+   - `-s, --shallow` — Return only top-level categories
+4. `category add` — Prompt through adding a new category
+   - `-p, --parent <categoryName>` — Create as a child of the provided category
+5. `product find` — Search products (defaults to name search)
+   - `-n, --name <productName>` — Search by name
+   - `-i, --id <productId>` — Look up by ID
+   - `-c, --category <categoryName>` — Filter by category (includes sub-categories)
+   - `-m, --manufacturer <manufacturerName>` — Filter by manufacturer
+6. `product add <categoryName>` — Prompt through adding a product; also prompts for spec details based on category
+7. `product update <productName>` — Prompt through updating a product by name
+   - `--id <productId>` — Look up by ID instead of name
+8. `manufacturer ls` (`manu ls`) — List all manufacturers
+9. `manufacturer add` (`manu add`) — Prompt through adding a manufacturer
 
 ## Development Environment
 
@@ -34,9 +42,10 @@ Developed on Nobara Linux in Visual Studio Code
 
 - **Language:** TypeScript
 - **Package Manager:** npm
-- **Validation:** Zod
+- **Backend-as-a-Service:** Firebase (Data Connect / CloudSQL)
+- **Validation:** Zod v4
 - **Testing:** Vitest
-- **Linter:** ESLint with typescript-eslint addon
+- **Linter:** ESLint with typescript-eslint
 
 ## Useful Websites
 
@@ -50,23 +59,25 @@ Developed on Nobara Linux in Visual Studio Code
 
 - [JavaScript Reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
-- [Zod Documentation](http://url.link.goes.here)
+- [Zod Documentation](https://zod.dev/)
 - [Vitest Documentation](https://vitest.dev/)
+- [Firebase Data Connect Documentation](https://firebase.google.com/docs/data-connect)
 
-## In Progress
+## Progress
 
-- [x] Hello World and first init
-- [ ] Built out classes and types for inventory
-- [ ] Add Zod for runtime validation
-- [ ] Build out CRUD functions
-- [ ] Build testing suite with vitest for CI/CD
-- [ ] "Checkout" Function
+- [x] Project setup and TypeScript config
+- [x] Firebase Data Connect schema (GraphQL / CloudSQL)
+- [x] Auto-generated SDK integration
+- [x] Zod v4 validation schemas for all entities
+- [x] CLI — category, manufacturer, and product commands (CRUD)
+- [x] Product spec prompts (CPU, GPU, RAM, Storage, PSU, CPU Cooler, Case, Motherboard)
+- [x] Vitest configured with test suite for CLI helpers and schemas
+- [ ] Full test coverage
+- [ ] Checkout / cart functionality
 
 ## Future Work
 
-- Add front-end with Vite.js and React-ts (including user interaction)
-- Setup hosting
-- Add user authentication
-- Add noSQL database
-- Convert CRUD operations to tanstack query
-- Add React Router
+- Frontend with Vite + React (React SDK already generated)
+- React Router + TanStack Query wiring
+- Firebase Auth integration
+- Hosting setup
