@@ -632,11 +632,11 @@ async function updateProductInteractive(
 
   const updateVars = updateProductSchema.parse({
     id: productId,
-    name: nameRaw || null,
-    description: descRaw || null,
-    color: colorRaw || null,
-    price: priceRaw ? parseFloat(priceRaw.replace('$', '')) : null,
-    quantity: quantityRaw ? parseInt(quantityRaw, 10) : null,
+    name: nameRaw || undefined,
+    description: descRaw || undefined,
+    color: colorRaw || undefined,
+    price: priceRaw ? parseFloat(priceRaw.replace('$', '')) : undefined,
+    quantity: quantityRaw ? parseInt(quantityRaw, 10) : undefined,
   });
 
   await updateProduct(updateVars);
