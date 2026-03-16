@@ -635,7 +635,7 @@ async function updateProductInteractive(
     name: nameRaw || null,
     description: descRaw || null,
     color: colorRaw || null,
-    price: priceRaw ? parseFloat(priceRaw) : null,
+    price: priceRaw ? parseFloat(priceRaw.replace('$', '')) : null,
     quantity: quantityRaw ? parseInt(quantityRaw, 10) : null,
   });
 

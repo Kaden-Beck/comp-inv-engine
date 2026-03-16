@@ -21,7 +21,12 @@ import type {
   GetProductImagesByProductIdVariables,
 } from '@dataconnect/generated';
 
-const uuidSchema = z.uuidv4();
+const uuidSchema = z.preprocess((val) => {
+  if (typeof val === 'string' && /^[0-9a-fA-F]{32}$/.test(val)) {
+    return `${val.slice(0, 8)}-${val.slice(8, 12)}-${val.slice(12, 16)}-${val.slice(16, 20)}-${val.slice(20)}`;
+  }
+  return val;
+}, z.uuidv4());
 
 export const createProductSchema: z.ZodType<CreateProductVariables> = z.object({
   name: z.string().min(1),
