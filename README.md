@@ -2,11 +2,19 @@
 
 ## Overview
 
-This TypeScript project is a Computer Hardware Store Inventory Management System.
+This project is the first in a series that are aimed to practice building full stack apps with TypeScript and React:
 
-I am using this project to explore TypeScript and practice writing full-stack applications with React outside of the Next.js ecosystem.
+   1. This Project (TypeScript, vitest, Zod)
+   2. Front-end (React, TanStack Query, Vite.js)
+   3. Finalized BASS (Firebase Data Connect, Auth, and Hosting)
 
-## Scripts
+This repository hosts a REPL program that accesses a Firebase Data Connect service to manage a Hardware Store Inventory Management System.
+
+Schema were built for Data Connect, an SDK was generated, and Zod was used to infer TS types and provided practice with Zod Validation. 
+
+## Usage
+
+###  Scripts
 
 | Command | Description |
 |---|---|
@@ -17,7 +25,7 @@ I am using this project to explore TypeScript and practice writing full-stack ap
 | `npm test` | Run Vitest test suite |
 | `npm run lint` | Run ESLint |
 
-## CLI Commands
+### CLI Commands
 
 1. `help` — Display help information
 2. `exit` — Exit the program and kill the emulator
@@ -42,8 +50,8 @@ Developed on Nobara Linux in Visual Studio Code
 
 - **Language:** TypeScript
 - **Package Manager:** npm
-- **Backend-as-a-Service:** Firebase (Data Connect / CloudSQL)
-- **Validation:** Zod v4
+- **Backend-as-a-Service:** Firebase (Data Connect)
+- **Validation:** Zod
 - **Testing:** Vitest
 - **Linter:** ESLint with typescript-eslint
 

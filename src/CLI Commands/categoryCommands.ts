@@ -12,30 +12,37 @@ import {
 } from './printProducts.js';
 import { createCategorySchema } from '../schemas/category.schema.js';
 
+
+// Parses arguments given after a 'category' flag
 export async function categoryCLI(
   state: State,
   ...args: string[]
 ): Promise<void> {
   const { positional, flags } = parseFlags(args);
-  const sub = positional[0];
+  const firstFlag = positional[0];
 
-  if (sub === 'ls') {
-    await listCategories(flags);
-  } else if (sub === 'add') {
-    await addCategoryInteractive(state, flags);
-  } else {
-    console.log(
-      'Usage:\n  category ls [-s|--shallow]\n  category add [-p|--parent <parentName>]',
-    );
+  switch (firstFlag) {
+    case 'ls':
+      await listCategories(flags);
+      break;
+    case 'add':
+      await addCategoryInteractive(state, flags);
+      break;
+    default:
+      console.log(
+        `Usage:\n  category ls [-s|--shallow]\n  category add [-p|--parent <parentName>]`,
+      );
   }
 }
 
+// If `ls` is selected then use the SDK to fetch a list of categories
 async function listCategories(
   flags: Record<string, string | true>,
 ): Promise<void> {
   const result = await getCategories();
   const rootCategories = result.data.categories;
 
+  // If no root categories log message
   if (rootCategories.length === 0) {
     console.log('No categories found.');
     return;
@@ -43,13 +50,12 @@ async function listCategories(
 
   const shallow = flags['s'] === true || flags['shallow'] === true;
 
-  for (const cat of rootCategories) {
-    console.log(cat.name);
+  for (const category of rootCategories) {
+    console.log(category.name);
     if (!shallow) {
-      const descendants = await getChildCategoriesRecursive(cat.id);
+      const descendants = await getChildCategoriesRecursive(category.id);
       for (const desc of descendants) {
-        const indent = '  '.repeat(desc.depth);
-        console.log(`${indent}${desc.name}`);
+        console.log(`${'  '.repeat(desc.depth)}${desc.name}`);
       }
     }
   }

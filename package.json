@@ -7,21 +7,16 @@
   "type": "module",
   "main": "main.js",
   "scripts": {
-    "build": "npx tsc",
-    "start": "node dist/main.js",
     "cli": "npx tsc && node dist/cli.js",
     "dev-cli": "USE_EMULATOR=true npx tsc && USE_EMULATOR=true node dist/cli.js",
     "seed": "USE_EMULATOR=true npx tsc && USE_EMULATOR=true node dist/seedDevDB.js",
-    "dev": "npx tsc && node dist/main.js",
     "test": "vitest",
     "lint": "eslint ."
   },
   "devDependencies": {
     "@eslint/js": "^9.39.3",
-    
     "@types/node": "^25.3.3",
     "eslint": "^9.39.3",
-    "eslint-plugin-react": "^7.37.5",
     "globals": "^16.5.0",
     "jiti": "^2.6.1",
     "typescript": "^5.9.3",

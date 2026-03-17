@@ -35,35 +35,44 @@ import { createCaseSpecsSchema } from '../schemas/case.schema.js';
 import { createRamSpecsSchema } from '../schemas/ram.schema.js';
 import { createMotherboardSpecsSchema } from '../schemas/motherboard.schema.js';
 
+/* *************************************************
+ Process product command flags and arguments
+ (accepts additional arguments)
+**************************************************/
 export async function productCLI(
   state: State,
   ...args: string[]
 ): Promise<void> {
   const { positional, flags } = parseFlags(args);
-  const sub = positional[0];
+  const firstArgument = positional[0];
+  const secondArgument = positional[1];
 
-  if (sub === 'find') {
-    await findProduct(state, positional, flags);
-  } else if (sub === 'add') {
-    const categoryName = positional[1];
-    if (!categoryName) {
-      console.log('Usage: product add <categoryName>');
-      return;
-    }
-    await addProductInteractive(state, categoryName);
-  } else if (sub === 'update') {
-    const productName = positional[1];
-    await updateProductInteractive(state, productName, flags);
-  } else {
-    console.log(
-      'Usage:\n' +
-        '  product find [-n <name>] [-i <id>] [-c <category>] [-m <manufacturer>]\n' +
-        '  product add <categoryName>\n' +
-        '  product update <productName> [--id <productId>]',
-    );
+  switch (firstArgument) {
+    case 'find':
+      await findProduct(state, positional, flags);
+      break;
+    case 'add':
+      if (!secondArgument) {
+        console.log('Usage: product add <categoryName>');
+        return;
+      } else {
+        await addProductInteractive(state, secondArgument);
+      }
+      break;
+    case 'update':
+      await updateProductInteractive(state, secondArgument, flags);
+      break;
+    default:
+      console.log(
+        'Usage:\n' +
+          '~ product find [-n <name>] [-i <id>] [-c <category>] [-m <manufacturer>]\n' +
+          '~ product add <categoryName>\n' +
+          '~ product update <productName> [--id <productId>]',
+      );
   }
 }
 
+// Format string using literals and console log
 function printProduct(p: {
   id: string;
   name: string;
@@ -73,72 +82,81 @@ function printProduct(p: {
   quantity: number;
   manufacturer: { name: string };
   category?: { name: string };
-}): void {
-  console.log(`  Name:         ${p.name}`);
-  console.log(`  SKU:          ${p.sku}`);
-  if (p.description) console.log(`  Description:  ${p.description}`);
-  console.log(`  Price:        ${p.price != null ? `$${p.price}` : 'N/A'}`);
-  console.log(`  Quantity:     ${p.quantity}`);
-  console.log(`  Manufacturer: ${p.manufacturer.name}`);
-  if (p.category) console.log(`  Category:     ${p.category.name}`);
-  console.log(`  ID:           ${p.id}`);
+}) {
+  console.log(` Name:         ${p.name}\n` + ` SKU:          ${p.sku}`);
+
+  if (p.description) console.log(` Description:  ${p.description}`);
+
+  console.log(
+    ` Price:        ${p.price != null ? `$${p.price}` : 'N/A'}\n` +
+      ` Quantity:     ${p.quantity}\n` +
+      ` Manufacturer: ${p.manufacturer.name}`,
+  );
+
+  if (p.category) console.log(` Category:     ${p.category.name}`);
+  console.log(` ID:           ${p.id}`);
 }
 
+// Parse which product flag was used and process accordingly
 async function findProduct(
   _state: State,
   positional: string[],
   flags: Record<string, string | true>,
-): Promise<void> {
+) {
   const nameFlag = flags['n'] || flags['name'];
   const idFlag = flags['i'] || flags['id'];
   const categoryFlag = flags['c'] || flags['category'];
   const manufacturerFlag = flags['m'] || flags['manufacturer'];
 
+  // idFlag invocation logic
   if (idFlag && typeof idFlag === 'string') {
     const result = await getProductById({ id: idFlag });
     const product = result.data.product;
-    if (!product) {
-      console.log('No product found with that ID.');
-      return;
-    }
-    printProduct(product);
+
+    product
+      ? printProduct(product)
+      : console.log('No product found with that ID.');
+
     return;
   }
 
+  // categoryFlag Invocation
   if (categoryFlag && typeof categoryFlag === 'string') {
-    const result = await getProductsByCategoryName(_state, categoryFlag);
-    if (!result) {
-      console.log(`Category "${categoryFlag}" not found.`);
-      return;
-    }
-    const products = result.products;
+    const result = await getProductsByCategoryName(categoryFlag);
+    if (!result)
+      return void console.log(`Category "${categoryFlag}" not found.`);
+
+    const { products } = result;
+
     if (products.length === 0) {
       console.log('No products in that category.');
-      return;
-    }
-    for (const p of products) {
-      console.log(
-        `- ${p.name} | $${p.price ?? 'N/A'} | Qty: ${p.quantity} | ${p.manufacturer.name}`,
-      );
+    } else {
+      for (const p of products) {
+        console.log(
+          `- ${p.name} | $${p.price ?? 'N/A'} | Qty: ${p.quantity} | ${p.manufacturer.name}`,
+        );
+      }
     }
     return;
   }
 
+  // manufacturerFlag Invocation
   if (manufacturerFlag && typeof manufacturerFlag === 'string') {
     const manuResult = await getManufacturerByName({ name: manufacturerFlag });
     const manufacturer = manuResult.data.manufacturers[0];
-    if (!manufacturer) {
-      console.log(`Manufacturer "${manufacturerFlag}" not found.`);
-      return;
-    }
+
+    if (!manufacturer)
+      return void console.log(`Manufacturer "${manufacturerFlag}" not found.`);
+
     const result = await getProductsByManufacturer({
       manufacturerId: manufacturer.id,
     });
+
     const products = result.data.products;
-    if (products.length === 0) {
-      console.log('No products found for that manufacturer.');
-      return;
-    }
+
+    if (products.length === 0)
+      return void console.log('No products found for that manufacturer.');
+
     for (const p of products) {
       console.log(
         `- ${p.name} | SKU: ${p.sku} | $${p.price ?? 'N/A'} | Qty: ${p.quantity} | ${p.category.name}`,
@@ -147,18 +165,25 @@ async function findProduct(
     return;
   }
 
+  // If none of above get nameFlag (if null set to empty string)
   const query = typeof nameFlag === 'string' ? nameFlag : (positional[1] ?? '');
+
   const result = await searchProductsByName({ nameQuery: query || null });
   const products = result.data.products;
   if (products.length === 0) {
     console.log('No products found.');
-    return;
+  } else {
+    for (const p of products) {
+      console.log('---');
+      printProduct(p);
+    }
   }
-  for (const p of products) {
-    console.log('---');
-    printProduct(p);
-  }
+  return;
 }
+
+/* *************************
+ Additional functionality (interactive Mutations)
+**************************/
 
 async function addProductInteractive(
   state: State,
@@ -255,6 +280,7 @@ async function addProductInteractive(
   await promptSpecsByCategory(state, categoryName, productId);
 }
 
+// Prompt proper prompts
 async function promptSpecsByCategory(
   state: State,
   categoryName: string,

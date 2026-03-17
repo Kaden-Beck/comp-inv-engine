@@ -35,9 +35,10 @@ Thumbs.db
 *.sln
 *.sw?
 
-# Firebase
+# Firebase (adds gemini)
 dataconnect/.dataconnect
 .firebase
+.gemini
 
 # Claude Code Artifacts
 .claude
