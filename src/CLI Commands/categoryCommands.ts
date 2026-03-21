@@ -4,7 +4,6 @@ import { prompt } from '../lib/cliHelpers/promptHelper.js';
 import {
   getCategories,
   addCategory,
-  getCategoryByName,
 } from '../lib/dataConnect/dcAPI.js';
 import {
   getChildCategoriesRecursive,

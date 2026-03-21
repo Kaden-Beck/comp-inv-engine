@@ -113,10 +113,11 @@ async function findProduct(
     const result = await getProductById({ id: idFlag });
     const product = result.data.product;
 
-    product
-      ? printProduct(product)
-      : console.log('No product found with that ID.');
-
+    if (product) {
+      printProduct(product);
+    } else {
+      console.log('No product found with that ID.');
+    }
     return;
   }
 

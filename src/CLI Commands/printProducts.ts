@@ -1,8 +1,6 @@
 import {
   getChildCategories,
-  GetChildCategoriesVariables,
   getCategoryByName,
-  GetCategoryByNameVariables,
   getProductsByCategory,
   UUIDString,
 } from '@dataconnect/generated';

@@ -45,43 +45,43 @@ describe('createProductSchema', () => {
 
   it('rejects empty name', () => {
     expect(
-      createProductSchema.safeParse({ ...validProduct, name: '' }).success
+      createProductSchema.safeParse({ ...validProduct, name: '' }).success,
     ).toBe(false);
   });
 
   it('rejects empty sku', () => {
     expect(
-      createProductSchema.safeParse({ ...validProduct, sku: '' }).success
+      createProductSchema.safeParse({ ...validProduct, sku: '' }).success,
     ).toBe(false);
   });
 
   it('rejects non-positive msrp', () => {
     expect(
-      createProductSchema.safeParse({ ...validProduct, msrp: 0 }).success
+      createProductSchema.safeParse({ ...validProduct, msrp: 0 }).success,
     ).toBe(false);
   });
 
   it('rejects negative msrp', () => {
     expect(
-      createProductSchema.safeParse({ ...validProduct, msrp: -10 }).success
+      createProductSchema.safeParse({ ...validProduct, msrp: -10 }).success,
     ).toBe(false);
   });
 
   it('rejects negative quantity', () => {
     expect(
-      createProductSchema.safeParse({ ...validProduct, quantity: -1 }).success
+      createProductSchema.safeParse({ ...validProduct, quantity: -1 }).success,
     ).toBe(false);
   });
 
   it('accepts zero quantity', () => {
     expect(
-      createProductSchema.safeParse({ ...validProduct, quantity: 0 }).success
+      createProductSchema.safeParse({ ...validProduct, quantity: 0 }).success,
     ).toBe(true);
   });
 
   it('rejects float quantity', () => {
     expect(
-      createProductSchema.safeParse({ ...validProduct, quantity: 1.5 }).success
+      createProductSchema.safeParse({ ...validProduct, quantity: 1.5 }).success,
     ).toBe(false);
   });
 
@@ -90,7 +90,7 @@ describe('createProductSchema', () => {
       createProductSchema.safeParse({
         ...validProduct,
         manufacturerId: 'bad-id',
-      }).success
+      }).success,
     ).toBe(false);
   });
 
@@ -99,16 +99,16 @@ describe('createProductSchema', () => {
       createProductSchema.safeParse({
         ...validProduct,
         categoryId: 'bad-id',
-      }).success
+      }).success,
     ).toBe(false);
   });
 });
 
 describe('updateProductSchema', () => {
   it('accepts only id (all others optional)', () => {
-    expect(
-      updateProductSchema.safeParse({ id: VALID_UUID }).success
-    ).toBe(true);
+    expect(updateProductSchema.safeParse({ id: VALID_UUID }).success).toBe(
+      true,
+    );
   });
 
   it('accepts partial update with name and price', () => {
@@ -123,31 +123,31 @@ describe('updateProductSchema', () => {
 
   it('rejects missing id', () => {
     expect(updateProductSchema.safeParse({ name: 'New Name' }).success).toBe(
-      false
+      false,
     );
   });
 
   it('rejects invalid id', () => {
-    expect(
-      updateProductSchema.safeParse({ id: 'not-a-uuid' }).success
-    ).toBe(false);
+    expect(updateProductSchema.safeParse({ id: 'not-a-uuid' }).success).toBe(
+      false,
+    );
   });
 
   it('rejects empty name string', () => {
     expect(
-      updateProductSchema.safeParse({ id: VALID_UUID, name: '' }).success
+      updateProductSchema.safeParse({ id: VALID_UUID, name: '' }).success,
     ).toBe(false);
   });
 
   it('rejects non-positive price', () => {
     expect(
-      updateProductSchema.safeParse({ id: VALID_UUID, price: 0 }).success
+      updateProductSchema.safeParse({ id: VALID_UUID, price: 0 }).success,
     ).toBe(false);
   });
 
   it('rejects negative quantity', () => {
     expect(
-      updateProductSchema.safeParse({ id: VALID_UUID, quantity: -1 }).success
+      updateProductSchema.safeParse({ id: VALID_UUID, quantity: -1 }).success,
     ).toBe(false);
   });
 });
@@ -155,7 +155,7 @@ describe('updateProductSchema', () => {
 describe('deleteProductSchema', () => {
   it('accepts a valid UUID', () => {
     expect(deleteProductSchema.safeParse({ id: VALID_UUID }).success).toBe(
-      true
+      true,
     );
   });
 
@@ -167,7 +167,7 @@ describe('deleteProductSchema', () => {
 describe('getProductBySkuSchema', () => {
   it('accepts a non-empty SKU', () => {
     expect(
-      getProductBySkuSchema.safeParse({ sku: 'INTEL-I9-14900K' }).success
+      getProductBySkuSchema.safeParse({ sku: 'INTEL-I9-14900K' }).success,
     ).toBe(true);
   });
 
@@ -180,7 +180,7 @@ describe('getProductsByManufacturerSchema', () => {
   it('accepts valid manufacturerId', () => {
     expect(
       getProductsByManufacturerSchema.safeParse({ manufacturerId: VALID_UUID })
-        .success
+        .success,
     ).toBe(true);
   });
 
@@ -189,14 +189,14 @@ describe('getProductsByManufacturerSchema', () => {
       getProductsByManufacturerSchema.safeParse({
         manufacturerId: VALID_UUID,
         limit: 10,
-      }).success
+      }).success,
     ).toBe(true);
   });
 
   it('rejects invalid manufacturerId', () => {
     expect(
       getProductsByManufacturerSchema.safeParse({ manufacturerId: 'bad' })
-        .success
+        .success,
     ).toBe(false);
   });
 });
@@ -208,39 +208,39 @@ describe('searchProductsByNameSchema', () => {
 
   it('accepts a search query', () => {
     expect(
-      searchProductsByNameSchema.safeParse({ nameQuery: 'Core i9' }).success
+      searchProductsByNameSchema.safeParse({ nameQuery: 'Core i9' }).success,
     ).toBe(true);
   });
 
   it('accepts null nameQuery', () => {
     expect(
-      searchProductsByNameSchema.safeParse({ nameQuery: null }).success
+      searchProductsByNameSchema.safeParse({ nameQuery: null }).success,
     ).toBe(true);
   });
 });
 
 describe('getLowStockProductsSchema', () => {
   it('accepts threshold of 0', () => {
-    expect(
-      getLowStockProductsSchema.safeParse({ threshold: 0 }).success
-    ).toBe(true);
+    expect(getLowStockProductsSchema.safeParse({ threshold: 0 }).success).toBe(
+      true,
+    );
   });
 
   it('accepts a positive threshold', () => {
-    expect(
-      getLowStockProductsSchema.safeParse({ threshold: 10 }).success
-    ).toBe(true);
+    expect(getLowStockProductsSchema.safeParse({ threshold: 10 }).success).toBe(
+      true,
+    );
   });
 
   it('rejects negative threshold', () => {
-    expect(
-      getLowStockProductsSchema.safeParse({ threshold: -1 }).success
-    ).toBe(false);
+    expect(getLowStockProductsSchema.safeParse({ threshold: -1 }).success).toBe(
+      false,
+    );
   });
 
   it('rejects float threshold', () => {
     expect(
-      getLowStockProductsSchema.safeParse({ threshold: 1.5 }).success
+      getLowStockProductsSchema.safeParse({ threshold: 1.5 }).success,
     ).toBe(false);
   });
 });
@@ -289,12 +289,12 @@ describe('productResultSchema', () => {
   });
 
   it('rejects missing manufacturer', () => {
-    const { manufacturer, ...rest } = validResult;
+    const { ...rest } = validResult;
     expect(productResultSchema.safeParse(rest).success).toBe(false);
   });
 
   it('rejects missing category', () => {
-    const { category, ...rest } = validResult;
+    const { ...rest } = validResult;
     expect(productResultSchema.safeParse(rest).success).toBe(false);
   });
 });
@@ -316,7 +316,7 @@ describe('productListItemSchema', () => {
   });
 
   it('rejects missing sku', () => {
-    const { sku, ...rest } = validItem;
+    const { ...rest } = validItem;
     expect(productListItemSchema.safeParse(rest).success).toBe(false);
   });
 });

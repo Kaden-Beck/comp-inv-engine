@@ -11,7 +11,10 @@ import {
   getProductBySku,
 } from './dcAPI.js';
 
-async function getOrCreateManufacturer(name: string, description: string): Promise<string> {
+async function getOrCreateManufacturer(
+  name: string,
+  description: string,
+): Promise<string> {
   const existing = await getManufacturerByName({ name });
   if (existing.data.manufacturers.length > 0) {
     return existing.data.manufacturers[0].id;
@@ -30,7 +33,12 @@ async function getOrCreateCategory(
   if (existing.data.categories.length > 0) {
     return existing.data.categories[0].id;
   }
-  const result = await addCategory({ name, description, isParent, parentId: parentId ?? null });
+  const result = await addCategory({
+    name,
+    description,
+    isParent,
+    parentId: parentId ?? null,
+  });
   return result.data.category_insert.id;
 }
 
@@ -47,23 +55,67 @@ async function getOrCreateProduct(
 
 export async function seedEmulator(): Promise<void> {
   console.log('Creating manufacturers...');
-  const intelId = await getOrCreateManufacturer('Intel', 'Leading CPU and chipset manufacturer');
-  const amdId = await getOrCreateManufacturer('AMD', 'Advanced Micro Devices — CPUs and GPUs');
-  const nvidiaId = await getOrCreateManufacturer('Nvidia', 'Leading discrete GPU manufacturer');
-  const corsairId = await getOrCreateManufacturer('Corsair', 'Memory, storage, and peripherals');
-  const samsungId = await getOrCreateManufacturer('Samsung', 'Storage and memory manufacturer');
-  const fractalId = await getOrCreateManufacturer('Fractal Design', 'PC cases and cooling');
+  const intelId = await getOrCreateManufacturer(
+    'Intel',
+    'Leading CPU and chipset manufacturer',
+  );
+  const amdId = await getOrCreateManufacturer(
+    'AMD',
+    'Advanced Micro Devices — CPUs and GPUs',
+  );
+  const nvidiaId = await getOrCreateManufacturer(
+    'Nvidia',
+    'Leading discrete GPU manufacturer',
+  );
+  const corsairId = await getOrCreateManufacturer(
+    'Corsair',
+    'Memory, storage, and peripherals',
+  );
+  const samsungId = await getOrCreateManufacturer(
+    'Samsung',
+    'Storage and memory manufacturer',
+  );
 
   console.log('Creating categories...');
-  const cpuCatId = await getOrCreateCategory('CPUs', 'Central Processing Units', true);
-  const gpuCatId = await getOrCreateCategory('GPUs', 'Graphics Processing Units', true);
-  const storageCatId = await getOrCreateCategory('Storage', 'SSDs, HDDs, and NVMe drives', true);
-  const ramCatId = await getOrCreateCategory('RAM', 'System memory modules', false);
-  const casesCatId = await getOrCreateCategory('Cases', 'PC chassis and cases', false);
+  const cpuCatId = await getOrCreateCategory(
+    'CPUs',
+    'Central Processing Units',
+    true,
+  );
+  const gpuCatId = await getOrCreateCategory(
+    'GPUs',
+    'Graphics Processing Units',
+    true,
+  );
+  const storageCatId = await getOrCreateCategory(
+    'Storage',
+    'SSDs, HDDs, and NVMe drives',
+    true,
+  );
+  const ramCatId = await getOrCreateCategory(
+    'RAM',
+    'System memory modules',
+    false,
+  );
 
-  await getOrCreateCategory('Discrete GPUs', 'Standalone graphics cards', false, gpuCatId);
-  await getOrCreateCategory('NVMe SSDs', 'PCIe NVMe solid state drives', false, storageCatId);
-  await getOrCreateCategory('SATA SSDs', 'SATA solid state drives', false, storageCatId);
+  await getOrCreateCategory(
+    'Discrete GPUs',
+    'Standalone graphics cards',
+    false,
+    gpuCatId,
+  );
+  await getOrCreateCategory(
+    'NVMe SSDs',
+    'PCIe NVMe solid state drives',
+    false,
+    storageCatId,
+  );
+  await getOrCreateCategory(
+    'SATA SSDs',
+    'SATA solid state drives',
+    false,
+    storageCatId,
+  );
 
   console.log('Creating products...');
 
@@ -96,7 +148,8 @@ export async function seedEmulator(): Promise<void> {
   const r9 = await getOrCreateProduct({
     name: 'AMD Ryzen 9 7950X',
     sku: '100-100000514WOF',
-    description: 'AMD Zen 4 flagship with 16 cores for workstation-class performance',
+    description:
+      'AMD Zen 4 flagship with 16 cores for workstation-class performance',
     msrp: 699.99,
     price: 599.99,
     quantity: 8,

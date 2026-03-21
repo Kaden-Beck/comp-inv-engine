@@ -30,8 +30,6 @@ export async function startREPL(): Promise<void> {
         } catch (err) {
           if (err instanceof Error) {
             console.error(err.message);
-          } else {
-            console.error(`Unknown Error: ${err}`);
           }
         }
       } else {
