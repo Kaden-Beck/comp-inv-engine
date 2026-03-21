@@ -12,7 +12,7 @@ This repository hosts a REPL program that accesses a Firebase Data Connect servi
 
 Schema were built for Data Connect, an SDK was generated, and Zod was used to infer TS types and provided practice with Zod Validation.
 
-[Software Demo Video](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+[Software Demo Video](https://youtu.be/ePtTgd0f2vU)
 
 ## Usage
 
