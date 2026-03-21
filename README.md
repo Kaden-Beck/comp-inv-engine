@@ -4,26 +4,27 @@
 
 This project is the first in a series that are aimed to practice building full stack apps with TypeScript and React:
 
-   1. This Project (TypeScript, vitest, Zod)
-   2. Front-end (React, TanStack Query, Vite.js)
-   3. Finalized BASS (Firebase Data Connect, Auth, and Hosting)
+1. This Project (TypeScript, vitest, Zod)
+2. Front-end (React, TanStack, Vite.js, Zod)
+3. Finalized Project (Firestore, Authentication, Hosting, React Query)
 
 This repository hosts a REPL program that accesses a Firebase Data Connect service to manage a Hardware Store Inventory Management System.
 
-Schema were built for Data Connect, an SDK was generated, and Zod was used to infer TS types and provided practice with Zod Validation. 
+Schema were built for Data Connect, an SDK was generated, and Zod was used to infer TS types and provided practice with Zod Validation.
+
+[Software Demo Video](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
 ## Usage
 
-###  Scripts
+### Scripts
 
-| Command | Description |
-|---|---|
-| `npm run dev-cli` | Build and run the CLI against the local emulator |
-| `npm run cli` | Build and run the CLI against the production server |
-| `npm run seed` | Seed the local emulator with sample data (requires emulator running) |
-| `npm run build` | Compile TypeScript |
-| `npm test` | Run Vitest test suite |
-| `npm run lint` | Run ESLint |
+| Command           | Description                                                          |
+| ----------------- | -------------------------------------------------------------------- |
+| `npm run dev-cli` | Build and run the CLI against the local emulator                     |
+| `npm run seed`    | Seed the local emulator with sample data (requires emulator running) |
+| `npm run build`   | Compile TypeScript                                                   |
+| `npm test`        | Run Vitest test suite                                                |
+| `npm run lint`    | Run ESLint                                                           |
 
 ### CLI Commands
 
@@ -46,7 +47,7 @@ Schema were built for Data Connect, an SDK was generated, and Zod was used to in
 
 ## Development Environment
 
-Developed on Nobara Linux in Visual Studio Code
+Developed in Visual Studio Code on Nobara Linux
 
 - **Language:** TypeScript
 - **Package Manager:** npm
@@ -61,6 +62,7 @@ Developed on Nobara Linux in Visual Studio Code
 
 - [Boot.dev | Learn JavaScript](https://www.boot.dev/courses/learn-javascript)
 - [Boot.dev | Learn TypeScript](https://www.boot.dev/courses/learn-http-clients-typescript)
+- [Boot. dev | TypeScript Pokedex Project](https://www.boot.dev/courses/build-pokedex-cli-typescript)
 - [Fireship.dev | JavaScript and TypeScript Modules](https://fireship.dev/c/typescript)
 
 ### Reference
@@ -80,12 +82,13 @@ Developed on Nobara Linux in Visual Studio Code
 - [x] CLI — category, manufacturer, and product commands (CRUD)
 - [x] Product spec prompts (CPU, GPU, RAM, Storage, PSU, CPU Cooler, Case, Motherboard)
 - [x] Vitest configured with test suite for CLI helpers and schemas
-- [ ] Full test coverage
+- [x] Full test coverage
 - [ ] Checkout / cart functionality
 
 ## Future Work
 
-- Frontend with Vite + React (React SDK already generated)
+- Frontend with Vite + React
+- Change to Firestore
 - React Router + TanStack Query wiring
 - Firebase Auth integration
-- Hosting setup
+- Firebase hosting, Authentication, and App Check
