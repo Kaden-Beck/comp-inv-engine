@@ -19,6 +19,9 @@ export default defineConfig([
         },
       },
     },
+    rules: {
+      '@typescript-eslint/require-await': 'off',
+    },
   },
   {
     files: ['tests/**/*.{ts,tsx}'],
